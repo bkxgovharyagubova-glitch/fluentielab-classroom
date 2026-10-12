@@ -24,10 +24,17 @@ body {
 button,input,select,textarea { font:inherit; }
 button { cursor:pointer; }
 .layout { min-height:100vh; display:flex; }
-.sidebar {
-  width:245px; background:var(--navy); color:white;
-  padding:25px 16px; flex-shrink:0;
 
+.sidebar {
+  width: 245px;
+  min-height: 100vh;
+  background: var(--navy);
+  color: white;
+  padding: 25px 16px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
 .brand {
   display: flex;
   align-items: center;
@@ -169,15 +176,15 @@ footer { text-align:center;color:var(--muted);font-size:10px;padding:28px 0; }
 </head>
 <body>
 <div class="layout">
-  <aside class="sidebar">
+ <aside class="sidebar">
+  <div class="brand">
     <img class="brand-mark" src="LOGO.png" alt="FLUENT LAB">
-      <div class="logo">F</div>
-      <div><h2>FLUENT LAB</h2><small>LEARN. PRACTICE. PROGRESS.</small></div>
+    <div>
+      <h2>FLUENT LAB</h2>
+      <small>LEARN. PRACTICE. PROGRESS.</small>
     </div>
-    <div class="nav-label">WORKSPACE</div>
-    <nav class="nav-list" id="navigation"></nav>
-    <div class="sidebar-foot">A dedicated space for learning English.<br>FLUENT LAB · Learning platform</div>
-  </aside>
+  </div>
+</aside>
   <main>
     <header class="topbar">
       <div><h3 id="pageTitle">Dashboard</h3><small id="dateLabel"></small></div>
