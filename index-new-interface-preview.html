@@ -1,0 +1,1000 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLUENT LAB | Learn. Practice. Progress.</title>
+<style>
+:root {
+  --navy:#172554;
+  --blue:#3457D5;
+  --pale:#F4F6FC;
+  --text:#202943;
+  --muted:#75809A;
+  --line:#E5E9F2;
+  --white:#FFFFFF;
+  --green:#17865B;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; font-family:Inter,Arial,sans-serif;
+  background:var(--pale); color:var(--text);
+  transition:background .2s ease,color .2s ease;
+}
+body[data-theme="dark"] {
+  --pale:#101827; --text:#E8EDF8; --muted:#A7B1C5; --line:#303B50; --white:#182235;
+}
+body[data-theme="dark"] .topbar,
+body[data-theme="dark"] .card,
+body[data-theme="dark"] .btn,
+body[data-theme="dark"] .role-select,
+body[data-theme="dark"] .search,
+body[data-theme="dark"] .form-field input,
+body[data-theme="dark"] .form-field select,
+body[data-theme="dark"] .form-field textarea,
+body[data-theme="dark"] .modal { background:#182235;color:var(--text);border-color:var(--line); }
+body[data-theme="dark"] th { background:#202c40; }
+body[data-theme="dark"] .btn.primary { background:var(--blue);color:white;border-color:var(--blue); }
+body[data-theme="dark"] .metric-icon { background:#263452; }
+.setting-row { display:flex;justify-content:space-between;align-items:center;gap:18px;padding:17px 0;border-bottom:1px solid var(--line); }
+.setting-row:last-child { border-bottom:0; }
+.setting-row h3 { margin:0 0 5px;font-size:13px; }
+.setting-row p { margin:0;color:var(--muted);font-size:12px;line-height:1.5; }
+.setting-control { min-width:150px;max-width:220px;padding:10px;border:1px solid var(--line);border-radius:8px;background:white;color:var(--text); }
+.settings-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:20px 0; }
+.danger-card { border-color:#F0C7C7; }
+@media(max-width:700px){.course-grid{grid-template-columns:1fr}.classroom-hero-art{display:none}.classroom-hero{padding:18px}.settings-grid{grid-template-columns:1fr}.setting-row{align-items:flex-start;flex-direction:column}.setting-control{max-width:none;width:100%}}
+button,input,select,textarea { font:inherit; }
+button { cursor:pointer; }
+.layout { min-height:100vh; display:flex; }
+.sidebar {
+  width:245px; background:var(--navy); color:white;
+  padding:25px 16px; flex-shrink:0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 10px 27px;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: #748BFF;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  background: #FFFFFF;
+  border-radius: 10px;
+  padding: 2px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.brand h2 {
+  font-size: 19px;
+  margin: 0;
+  letter-spacing: 1px;
+}
+.brand small {
+  color: #B9C7FF;
+  font-size: 11px;
+}
+.nav-label { color:#B9C7E8;font-size:12px;font-weight:750;letter-spacing:1.5px;padding:12px 12px 14px; }
+.nav-list { display:flex;flex-direction:column;gap:7px; }
+.nav-btn { width:100%;display:flex;align-items:center;gap:13px;text-align:left;border:1px solid transparent;border-radius:12px;padding:11px 12px;background:transparent;color:#EAF0FF;font-size:13px;font-weight:600;transition:background .18s ease,border-color .18s ease,transform .18s ease; }
+.nav-btn > span { width:39px;height:39px;flex:0 0 39px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#30476F,#24365A);box-shadow:inset 0 1px 0 #ffffff22,0 3px 8px #07132c55;font-size:21px; }
+.nav-btn:hover { background:#263960;color:white;border-color:#3B5686;transform:translateX(2px); }
+.nav-btn.active { background:linear-gradient(105deg,#2E4F91,#273F78);color:white;border-color:#3D5DA7;box-shadow:0 5px 14px #07132c33; }
+.nav-btn.active > span { background:linear-gradient(145deg,#72A9FF,#3468EB);box-shadow:inset 0 1px 0 #ffffff66,0 3px 7px #07132c44; }
+.sidebar-foot { margin-top:35px;padding:12px;color:#B9C7FF;font-size:11px;line-height:1.7; }
+main { flex:1;min-width:0; }
+.topbar {
+  height:76px;background:white;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 30px;gap:15px;
+}
+.topbar h3 { margin:0;font-size:17px; }
+.topbar small { color:var(--muted); }
+.role-select { border:1px solid var(--line);border-radius:8px;padding:9px;background:white; }
+.content { padding:30px;max-width:1500px;margin:auto; }
+.eyebrow { color:var(--blue);font-size:11px;font-weight:bold;letter-spacing:1.5px; }
+h1 { margin:8px 0;font-size:27px;letter-spacing:-.6px; }
+.subtitle { color:var(--muted);font-size:13px;line-height:1.6; }
+.toolbar { display:flex;gap:10px;flex-wrap:wrap;margin:22px 0; }
+.btn {
+  border:1px solid var(--line);background:white;color:var(--text);
+  padding:10px 14px;border-radius:8px;font-weight:600;font-size:12px;
+}
+.btn.primary { background:var(--blue);color:white;border-color:var(--blue); }
+.btn:hover { opacity:.86; }
+.grid { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:22px 0; }
+.card {
+  background:white;border:1px solid var(--line);border-radius:13px;
+  padding:20px;min-width:0;
+}
+.metric-top { display:flex;justify-content:space-between;align-items:center;gap:8px; }
+.metric-icon { width:38px;height:38px;background:#EEF1FF;border-radius:10px;display:grid;place-items:center;font-size:19px; }
+.metric-label { color:var(--muted);font-size:12px;font-weight:750; }
+.metric-value { font-size:29px;font-weight:750;margin:16px 0 5px; }
+.metric-note { color:var(--muted);font-size:11px; }
+.section-head { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px; }
+.section-head h2 { font-size:16px;margin:0; }
+.two-col { display:grid;grid-template-columns:1.25fr 1fr;gap:18px; }
+.activity { display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line); }
+.activity:last-child { border:0; }
+.dot { width:9px;height:9px;border-radius:50%;background:#6C83F5;margin-top:5px;flex-shrink:0; }
+.activity strong { font-size:12px; }
+.activity p { margin:5px 0;color:var(--muted);font-size:11px;line-height:1.5; }
+.pill { display:inline-block;border-radius:20px;padding:5px 9px;font-size:10px;background:#EEF1FF;color:#3457D5; }
+.pill.green { background:#E4F7EE;color:#14764F; }
+.pill.orange { background:#FFF1DA;color:#A3630C; }
+.pill.gray { background:#EFF1F5;color:#69748B; }
+.table-wrap { overflow-x:auto; }
+table { border-collapse:collapse;width:100%;font-size:12px; }
+th { text-align:left;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.6px;background:#FAFBFE; }
+th,td { padding:14px 12px;border-bottom:1px solid var(--line);white-space:nowrap; }
+td { font-size:12px; }
+.person { display:flex;align-items:center;gap:10px; }
+.avatar { width:34px;height:34px;display:grid;place-items:center;background:#E8ECFF;color:var(--blue);border-radius:50%;font-weight:bold; }
+.person small { display:block;color:var(--muted);margin-top:4px; }
+.search { border:1px solid var(--line);padding:10px 12px;border-radius:8px;min-width:190px;background:white; }
+.course-grid { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px; }
+.classroom-hero{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 26px;margin:22px 0;background:linear-gradient(115deg,#fff 0%,#eef2ff 100%);border:1px solid #e0e7ff;border-radius:18px;}
+.classroom-hero-copy{max-width:590px}.classroom-hero h2{font-size:20px;margin:0 0 7px;color:#202943}.classroom-hero p{font-size:12px;color:#75809a;line-height:1.7;margin:0}.classroom-hero-art{width:100px;height:100px;flex:0 0 100px;border-radius:24px;display:grid;place-items:center;background:linear-gradient(145deg,#dce7ff,#b9cbff);font-size:48px;box-shadow:inset 0 1px 0 #ffffffaa;}
+.classroom-tools{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin:20px 0}.classroom-tools-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.classroom-count{font-size:12px;color:var(--muted);font-weight:700}.classroom-card{position:relative;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease}.classroom-card:hover{transform:translateY(-3px);box-shadow:0 12px 28px #263c7014}.classroom-card:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#3457d5,#8aa8ff)}.classroom-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:3px 0 16px}.course-icon{width:44px;height:44px;border-radius:13px;background:#eef1ff;display:grid;place-items:center;font-size:23px;margin:0}.classroom-card h3{font-size:15px;font-weight:800;margin:0 0 7px}.classroom-description{min-height:32px;color:var(--muted);font-size:11px;line-height:1.5;margin:0 0 13px}.classroom-meta{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:14px 0}.classroom-meta-item{padding:10px;border:1px solid var(--line);border-radius:10px;background:#fafbff}.classroom-meta-item small{display:block;color:var(--muted);font-size:10px;margin-bottom:4px}.classroom-meta-item strong{font-size:12px}.classroom-card .progress{margin:14px 0 16px}.classroom-card-actions{display:flex;gap:8px;flex-wrap:wrap}.classroom-card-actions .btn{flex:1}.create-class-card{border:1px dashed #aab9f5;background:#f9faff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:280px;cursor:pointer;color:#3457d5}.create-class-card:hover{background:#eef2ff;border-color:#3457d5}.create-class-plus{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:#e5ebff;font-size:29px;margin-bottom:15px}.create-class-card strong{font-size:14px}.create-class-card small{max-width:180px;line-height:1.6;color:#75809a;margin-top:7px}
+body[data-theme="dark"] .classroom-hero{background:linear-gradient(115deg,#182235,#202c48);border-color:var(--line)}body[data-theme="dark"] .classroom-hero h2{color:var(--text)}body[data-theme="dark"] .classroom-meta-item,body[data-theme="dark"] .create-class-card{background:#202c40;border-color:var(--line)}body[data-theme="dark"] .create-class-card{color:#aebfff}
+.course-icon { font-size:24px;margin-bottom:16px; }
+.course-card h3 { font-size:15px;margin:0 0 8px; }
+.course-card p { color:var(--muted);font-size:12px;line-height:1.6; }
+.progress { height:6px;background:#E9ECF5;border-radius:20px;overflow:hidden;margin:12px 0; }
+.progress span { display:block;height:100%;background:var(--blue);border-radius:20px; }
+.empty { text-align:center;padding:35px 15px;color:var(--muted);font-size:12px; }
+.modal-bg {
+  position:fixed;inset:0;background:#111B35A6;display:none;
+  align-items:center;justify-content:center;padding:18px;z-index:5;
+}
+.modal {
+  width:100%;max-width:500px;max-height:90vh;overflow:auto;
+  background:white;border-radius:15px;padding:25px;
+}
+.modal h2 { margin-top:0;font-size:20px; }
+.form-field { margin:15px 0; }
+.class-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px}.class-form-grid .form-section-label{grid-column:1/-1;font-size:10px;font-weight:800;letter-spacing:1.2px;color:var(--blue);padding-top:13px;border-top:1px solid var(--line);margin-top:8px}.class-form-grid .form-field:has(textarea){grid-column:1/-1}.modal:has(.class-form-grid){max-width:760px}.modal:has(.class-form-grid) #modalFields{max-height:62vh;overflow:auto;padding:0 3px}@media(max-width:600px){.class-form-grid{grid-template-columns:1fr}.class-form-grid .form-section-label,.class-form-grid .form-field:has(textarea){grid-column:1}}
+.form-field label { display:block;font-size:12px;font-weight:600;margin-bottom:7px; }
+.form-field input,.form-field select,.form-field textarea {
+  width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;background:white;
+}
+.form-field textarea { min-height:85px;resize:vertical; }
+.form-actions { display:flex;justify-content:flex-end;gap:9px;margin-top:20px; }
+.notice { background:#FFF8E8;border:1px solid #F4E2B3;color:#7E5A12;border-radius:9px;padding:13px;font-size:11px;line-height:1.6;margin-top:20px; }
+.mobile-menu { display:none; }
+footer { text-align:center;color:var(--muted);font-size:10px;padding:28px 0; }
+@media(max-width:1050px) {
+ .sidebar { width:205px; }
+ .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .course-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.classroom-hero{padding:20px}.classroom-hero-art{width:76px;height:76px;flex-basis:76px;font-size:36px}
+ .course-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .content { padding:22px; }
+}
+@media(max-width:700px) {
+ .layout { display:block; }
+ .sidebar { width:100%;padding:12px; }
+ .brand { padding:5px 8px 12px; }
+ .sidebar .nav-label,.sidebar-foot { display:none; }
+ .nav-list { display:flex;flex-direction:column;overflow:visible;gap:5px; }
+ .nav-btn { width:100%;flex-shrink:1;padding:8px 10px;font-size:12px; }
+ .nav-btn > span { width:34px;height:34px;flex-basis:34px;font-size:19px; }
+ .topbar { height:auto;min-height:65px;padding:13px 17px; }
+ .content { padding:18px 14px; }
+ .grid { gap:9px; }
+ .card { padding:14px; }
+ .metric-value { font-size:24px; }
+ .two-col,.course-grid { grid-template-columns:1fr; }
+ .topbar h3 { font-size:14px; }
+ .role-select { max-width:130px;font-size:11px; }
+ h1 { font-size:23px; }
+}
+
+/* Parent messaging workspace */
+.messages-layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:18px;margin-top:20px;min-height:480px}
+.conversation-list{padding:0;overflow:hidden}.conversation-list-head{padding:18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}.conversation-list-head h2{font-size:15px;margin:0}.icon-btn{width:36px;height:36px;border:0;border-radius:11px;background:#3457D5;color:#fff;font-size:23px;line-height:1;display:grid;place-items:center}.conversation-item{display:flex;align-items:center;gap:11px;padding:15px 17px;border-bottom:1px solid var(--line);cursor:pointer}.conversation-item.active,.conversation-item:hover{background:#EEF1FF;color:#202943}.conversation-avatar{width:40px;height:40px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;background:#DFE6FF;color:#3457D5;font-weight:700}.conversation-info{min-width:0;flex:1}.conversation-info strong{display:block;font-size:12px}.conversation-info small{display:block;color:var(--muted);font-size:11px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chat-panel{display:flex;flex-direction:column;min-height:480px;padding:0;overflow:hidden}.chat-head{padding:17px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}.chat-head h2{font-size:14px;margin:0 0 4px}.chat-head p{font-size:11px;margin:0;color:var(--muted)}.chat-feed{flex:1;min-height:270px;max-height:430px;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:12px;background:linear-gradient(180deg,var(--white),var(--pale))}.chat-empty{text-align:center;margin:auto;max-width:320px;color:var(--muted);font-size:12px;line-height:1.7}.message-bubble{max-width:82%;align-self:flex-start;background:#EEF1FF;color:#202943;padding:11px 13px;border-radius:14px 14px 14px 4px;font-size:12px;line-height:1.5;overflow-wrap:anywhere}.message-bubble.mine{align-self:flex-end;background:#3457D5;color:#fff;border-radius:14px 14px 4px 14px}.message-bubble small{display:block;opacity:.7;font-size:10px;margin-top:5px}.message-attachment{display:block;margin-top:9px;max-width:min(100%,420px);border:1px solid currentColor;border-radius:10px;overflow:hidden;font-size:11px}.message-attachment img,.message-attachment video{display:block;max-width:100%;max-height:300px;object-fit:contain;background:#111}.message-attachment iframe{display:block;width:100%;height:300px;background:#fff;border:0}.attachment-filecard{display:flex;align-items:center;gap:10px;padding:12px;background:rgba(255,255,255,.13);min-width:180px}.attachment-fileicon{font-size:25px;flex-shrink:0}.attachment-fileinfo{min-width:0;flex:1}.attachment-fileinfo strong{display:block;overflow-wrap:anywhere;font-size:11px}.attachment-fileinfo small{display:block;opacity:.75;margin-top:4px}.attachment-actions{display:flex;gap:8px;padding:0 12px 10px;flex-wrap:wrap}.attachment-actions a{color:inherit;text-decoration:underline;font-size:11px}.selected-file-previews{display:flex;gap:9px;flex-wrap:wrap;margin:6px 0 10px}.selected-file-preview{border:1px solid var(--line);border-radius:9px;overflow:hidden;max-width:130px;background:var(--white);color:var(--text);font-size:10px}.selected-file-preview img,.selected-file-preview video{width:120px;height:78px;display:block;object-fit:cover}.selected-file-preview span{display:block;padding:5px;overflow-wrap:anywhere}.selected-file-preview .preview-icon{height:58px;display:grid;place-items:center;font-size:25px}.composer{padding:14px;border-top:1px solid var(--line)}.composer-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}.tool-btn{border:1px solid var(--line);background:var(--white);color:var(--text);border-radius:9px;padding:8px 10px;font-size:11px}.composer-row{display:flex;gap:9px;align-items:flex-end}.composer-row textarea{flex:1;min-width:0;min-height:44px;max-height:120px;resize:vertical;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--white);color:var(--text)}.file-chip{font-size:11px;color:var(--muted);padding:5px 0}.message-note{font-size:10px;color:var(--muted);line-height:1.5;margin-top:10px}.recording{color:#b42318;font-weight:700}.teacher-choice{display:grid;gap:10px}.teacher-choice button{display:flex;gap:12px;align-items:center;text-align:left;padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--white);color:var(--text)}.teacher-choice button:hover{border-color:var(--blue);background:#EEF1FF}
+@media(max-width:850px){.messages-layout{grid-template-columns:1fr}.conversation-list{max-height:260px;overflow:auto}.chat-panel{min-height:430px}}
+body[data-theme="dark"] .conversation-item.active,body[data-theme="dark"] .conversation-item:hover,body[data-theme="dark"] .teacher-choice button:hover{background:#263452;color:var(--text)}
+
+
+.home-brand-banner{display:flex;align-items:center;justify-content:center;width:100%;padding:12px 18px;margin:0 0 26px;background:#fff;border:1px solid var(--line);border-radius:15px;min-height:0;overflow:hidden;}
+.home-brand-banner img{display:block;width:100%;height:auto;max-height:230px;object-fit:contain;object-position:center;flex:1 1 auto;}
+.home-brand-copy{display:flex;flex-direction:column;gap:5px;min-width:0;}
+.home-brand-copy strong{font-size:clamp(23px,3vw,34px);letter-spacing:2px;line-height:1.1;color:#172554;}
+.home-brand-copy span{font-size:12px;letter-spacing:2.5px;font-weight:700;color:#3457D5;}
+body[data-theme="dark"] .home-brand-banner{background:#fff;}
+body[data-theme="dark"] .home-brand-copy strong{color:#edf2ff;}
+@media(max-width:520px){.home-brand-banner{padding:8px;margin-bottom:18px}.home-brand-banner img{max-height:130px}}
+
+
+/* Role-specific authentication preview */
+.auth-gate{position:fixed;inset:0;z-index:9999;overflow:auto;background:linear-gradient(135deg,#f5f7ff 0%,#eef5f8 55%,#fff9ee 100%);display:flex;align-items:center;justify-content:center;padding:28px 16px;color:#202943}
+.auth-shell{width:min(1060px,100%);display:grid;grid-template-columns:0.92fr 1.08fr;background:#fff;border:1px solid #e3e8f2;border-radius:26px;overflow:hidden;box-shadow:0 24px 70px rgba(23,37,84,.15);min-height:590px}
+.auth-welcome{padding:42px;background:linear-gradient(150deg,#172554,#263c7d);color:#fff;display:flex;flex-direction:column;justify-content:space-between}
+.auth-brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.5px;font-size:20px}.auth-brand img{width:52px;height:52px;object-fit:contain;background:white;border-radius:12px;padding:3px}
+.auth-welcome h1{font-size:35px;line-height:1.15;margin:36px 0 15px}.auth-welcome p{color:#dce5ff;line-height:1.7;font-size:14px}.auth-benefits{display:grid;gap:13px;margin-top:26px}.auth-benefits div{display:flex;gap:10px;align-items:center;font-size:13px;color:#eef2ff}.auth-check{width:24px;height:24px;border-radius:8px;background:#ffffff1c;display:grid;place-items:center;flex-shrink:0}
+.auth-panel{padding:36px 42px;display:flex;flex-direction:column;justify-content:center}.auth-panel h2{font-size:25px;margin:0 0 7px}.auth-muted{color:#77819a;font-size:13px;line-height:1.5;margin:0 0 22px}.auth-roles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 21px}.auth-role{border:1px solid #e0e5ef;background:#fff;border-radius:12px;padding:12px 4px;color:#5b6680;font-size:11px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer}.auth-role .auth-emoji{font-size:21px}.auth-role.active{border-color:#3457d5;background:#eef2ff;color:#2948bd;box-shadow:0 0 0 2px #3457d511}
+.auth-tabs{display:flex;gap:5px;background:#f1f3f9;padding:4px;border-radius:11px;margin-bottom:19px}.auth-tab{flex:1;border:0;border-radius:8px;padding:10px;background:transparent;color:#69738b;font-weight:700;font-size:13px}.auth-tab.active{background:#fff;color:#172554;box-shadow:0 2px 8px #17255412}.auth-field{display:block;margin:0 0 13px;font-size:12px;font-weight:700;color:#4a5570}.auth-field input{display:block;width:100%;margin-top:7px;padding:12px 13px;border:1px solid #dfe4ef;border-radius:10px;background:#fff;color:#202943;outline:none}.auth-field input:focus{border-color:#3457d5;box-shadow:0 0 0 3px #3457d51a}.auth-submit{width:100%;border:0;border-radius:11px;background:#3457d5;color:white;padding:13px;font-weight:800;margin-top:3px}.auth-google{width:100%;border:1px solid #dfe4ef;border-radius:11px;background:#fff;color:#34405a;padding:12px;font-weight:700;margin-top:10px}.auth-sep{text-align:center;color:#8a93a8;font-size:11px;margin:13px 0}.auth-note{font-size:11px;line-height:1.5;color:#7a849b;margin:16px 0 0}.auth-feedback{display:none;padding:10px 12px;border-radius:9px;background:#fff4df;color:#7b4a00;font-size:12px;line-height:1.5;margin-top:12px}.auth-demo{display:block;margin:18px auto 0;border:0;background:transparent;color:#3457d5;font-size:12px;font-weight:700;text-decoration:underline}.auth-admin-note{display:none;font-size:11px;color:#7a849b;line-height:1.5;margin:-4px 0 12px}.auth-gate.hidden{display:none}.role-signup-note{font-size:11px;color:#6c7690;line-height:1.5;margin:0 0 12px}.demo-mode-banner{display:none;margin:0 0 16px;padding:10px 13px;border-radius:10px;background:#fff4df;color:#7b4a00;font-size:12px;line-height:1.45}.demo-mode-banner.show{display:block}
+@media(max-width:760px){.auth-shell{grid-template-columns:1fr;max-width:520px}.auth-welcome{padding:24px 26px}.auth-welcome h1{font-size:27px;margin:24px 0 10px}.auth-benefits{display:none}.auth-welcome p{margin-bottom:0}.auth-panel{padding:27px 24px}.auth-shell{min-height:0}.auth-brand img{width:42px;height:42px}}
+
+
+/* Assessment centre redesign */
+.exam-page-heading{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:8px 0 4px}.exam-page-heading h1{margin:0;font-size:29px;font-weight:850;letter-spacing:-.7px}.exam-page-heading .subtitle{margin:8px 0 0;max-width:620px}.exam-main-action{padding:13px 18px;box-shadow:0 5px 12px #3457d51c}.exam-summary-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:24px 0}.exam-summary-card{padding:19px 20px;transition:transform .18s ease,box-shadow .18s ease}.exam-summary-card:hover{transform:translateY(-2px);box-shadow:0 10px 24px #263c7010}.exam-summary-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.exam-summary-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#edf1ff;font-size:19px}.exam-summary-icon.green-icon{background:#e3f8ee;color:#15845c}.exam-summary-icon.amber-icon{background:#fff2d9;color:#a66a12}.exam-summary-icon.violet-icon{background:#f0eaff;color:#7953c8}.exam-summary-caption{font-size:9px;font-weight:800;letter-spacing:1px;color:var(--muted)}.exam-summary-value{display:block;font-size:29px;line-height:1.2;margin:17px 0 5px;font-weight:850;color:var(--text)}.exam-summary-note{font-size:11px;color:var(--muted)}.exam-panel{padding:22px 20px;margin-bottom:18px}.exam-panel .section-head{margin-bottom:18px}.exam-panel .section-head h2{font-size:17px;font-weight:800}.exam-panel-subtitle{font-size:11px;color:var(--muted);margin:5px 0 0}.exam-panel table th{padding:13px 12px}.exam-panel table td{padding:15px 12px}.exam-name-cell{display:flex;align-items:center;gap:11px}.exam-row-icon{width:35px;height:35px;display:grid;place-items:center;border-radius:10px;background:#edf1ff;font-size:17px;flex-shrink:0}.exam-name-cell strong{display:block;font-size:12px}.exam-name-cell small{display:block;color:var(--muted);font-size:10px;margin-top:4px}.result-percent{display:flex;align-items:center;gap:10px;min-width:135px}.result-percent .progress{width:82px;height:6px;margin:0;flex-shrink:0}.result-percent strong{font-size:11px;min-width:32px}.exam-results-panel{margin-bottom:0}
+@media(max-width:1000px){.exam-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.exam-page-heading{align-items:flex-start}}
+@media(max-width:600px){.exam-page-heading{display:block}.exam-main-action{margin-top:15px;width:100%}.exam-summary-grid{grid-template-columns:1fr 1fr;gap:10px}.exam-summary-card{padding:14px}.exam-summary-value{font-size:24px}.exam-panel{padding:15px 12px}}
+
+
+.exam-title-link{padding:0;border:0;background:transparent;color:var(--text);font:inherit;font-weight:800;text-align:left;cursor:pointer}.exam-title-link:hover{color:var(--primary);text-decoration:underline}.exam-title-link span{font-size:11px;color:var(--primary);opacity:.75}.text-back{display:inline-block;border:0;background:transparent;color:var(--primary);padding:0;margin:0 0 12px;cursor:pointer;font-weight:750;font-size:12px}.exam-builder-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:22px 0}.builder-stat{display:flex;align-items:center;gap:13px;padding:17px}.builder-stat-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:13px;background:#edf1ff;font-size:19px}.builder-stat small{display:block;font-size:9px;font-weight:800;letter-spacing:.8px;color:var(--muted);margin-bottom:5px}.builder-stat strong{font-size:18px;font-weight:850}.question-list{display:grid;gap:12px}.question-card{display:flex;gap:13px;border:1px solid var(--border,#e1e6f2);border-radius:14px;padding:17px;background:var(--surface,#fff)}.question-number{flex-shrink:0;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:#edf1ff;color:#3457d5;font-size:12px;font-weight:850}.question-content{min-width:0;flex:1}.question-topline{display:flex;align-items:center;gap:10px}.question-points{font-size:11px;color:var(--muted);font-weight:700}.question-card h3{font-size:14px;margin:12px 0;font-weight:800}.question-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.question-option{padding:10px 12px;border:1px solid var(--border,#e1e6f2);border-radius:9px;font-size:12px}.question-option b{margin-right:5px;color:var(--muted)}.question-option.correct-option{border-color:#8dd8b6;background:#edfbf4}.question-option span{display:block;color:#12825b;font-size:10px;font-weight:800;margin-top:5px}.question-answer{padding:11px 13px;background:#f5f7fc;border-radius:9px;font-size:12px}.question-actions{display:flex;gap:8px;margin-top:13px}.btn.danger{color:#b42332}.question-empty{text-align:center;padding:32px 20px;border:1px dashed var(--border,#dfe5f1);border-radius:14px;background:#fbfcff}.question-empty-icon{font-size:28px;color:var(--primary)}.question-empty h3{margin:10px 0 5px}.question-empty p{font-size:12px;color:var(--muted);max-width:440px;margin:0 auto}.question-editor-panel{margin-top:18px}.question-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.question-form-grid .question-wide{grid-column:1/-1}.question-form-grid #questionOptionsFields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.question-form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.exam-builder-footer{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:16px 0 0;padding:18px 20px;border-radius:14px;background:#eef2ff}.exam-builder-footer p{font-size:12px;margin:0}.exam-builder-footer strong{font-weight:850}@media(max-width:800px){.exam-builder-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.exam-builder-footer{align-items:flex-start;flex-direction:column}.question-options{grid-template-columns:1fr}}@media(max-width:560px){.question-form-grid,.question-form-grid #questionOptionsFields{grid-template-columns:1fr}.question-form-grid .question-wide{grid-column:auto}.question-card{padding:12px}.exam-builder-summary{gap:8px}.builder-stat{padding:12px}}
+
+
+/* Student preview: learner-first classroom workspace */
+.student-class-hero{margin:18px 0;background:linear-gradient(115deg,#e9efff,#f9fbff);border:1px solid #dce5ff}
+.student-learning-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}
+.student-learning-stats>.card{display:flex;flex-direction:column;gap:8px;padding:20px}
+.student-learning-stats small,.student-class-meta small{font-size:10px;letter-spacing:.09em;color:#6b7894;font-weight:800}
+.student-learning-stats strong{font-size:27px;color:#192b58}
+.student-learning-stats span:not(.student-stat-icon){font-size:12px;color:#6b7894}
+.student-stat-icon,.student-resource-icon{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:13px;background:#edf1ff;font-size:22px}
+.student-class-grid,.student-resource-grid,.student-exam-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}
+.student-class-card{padding:22px}
+.student-class-card-top{display:flex;align-items:center;justify-content:space-between}
+.student-class-icon{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#edf1ff;font-size:25px}
+.student-class-card h2,.student-exam-card h2{font-size:20px;margin:16px 0 8px;color:#1b2b53}
+.student-class-card>p,.student-exam-card>p{color:#687794;font-size:13px;line-height:1.6}
+.student-class-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0}
+.student-class-meta span{display:flex;flex-direction:column;gap:6px}
+.student-class-meta strong{font-size:12px;line-height:1.4}
+.student-class-actions{border-top:1px solid #e8edf6;padding-top:15px}
+.student-clickable-item{width:100%;text-align:left;font:inherit;color:inherit;background:#fff;border:0;border-top:1px solid #e5eaf5;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 12px}.student-clickable-item:hover{background:#f7f9ff}.student-item-main{display:flex;flex:1;min-width:0;flex-direction:column;gap:5px}.student-open-label{font-size:12px;font-weight:800;color:#3558dc;white-space:nowrap}.viewer-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px}.viewer-head h2{margin:5px 0}.student-exam-question-list{max-height:60vh;overflow:auto;display:grid;gap:12px}.modal-bg .modal-card{max-width:850px;max-height:90vh;overflow:auto}.student-exam-question-list .question-card{margin:0}.student-detail-section{margin-top:24px;scroll-margin-top:20px}
+.student-class-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.student-class-tabs button{display:inline-flex;align-items:center;gap:8px;padding:11px 15px;border:1px solid #dfe6f5;background:#fff;border-radius:10px;color:#2d4379;font-size:12px;font-weight:800;cursor:pointer}.student-class-tabs button:hover{background:#eef2ff;border-color:#b9c8fa}.student-class-tabs button.active{background:#3558dc;color:#fff;border-color:#3558dc;box-shadow:0 5px 14px #3558dc22}.student-detail-section{margin-top:24px;scroll-margin-top:18px}.student-section-intro{margin:-4px 0 18px;color:#71809b;font-size:13px}
+.student-detail-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.student-detail-heading h2{margin:3px 0;font-size:23px}
+.student-detail-heading p{margin:5px 0;color:#71809b;font-size:13px}
+.student-content-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.student-content-card{padding:20px}
+.student-content-heading{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.student-content-heading>span{font-size:24px}
+.student-content-heading h3{margin:0 0 5px;font-size:16px}
+.student-content-heading p{margin:0;color:#74809a;font-size:12px;line-height:1.5}
+.student-item-row{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid #edf0f6}
+.student-item-row>div{flex:1;min-width:0}
+.student-item-row strong{display:block;font-size:13px}
+.student-item-row small{display:block;color:#78849c;font-size:11px;margin-top:5px}
+.student-item-row .progress{margin-top:8px;max-width:220px}
+.student-file-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:11px;background:#f0f3ff;font-size:18px;flex-shrink:0}
+.student-empty-inline{padding:18px 12px;background:#f8faff;border-radius:10px;color:#71809a;font-size:13px;line-height:1.5}
+.student-resource-card,.student-exam-card{padding:20px}
+.student-resource-card>.pill,.student-exam-card>.pill{margin-left:8px;vertical-align:middle}
+.student-resource-card h3{font-size:17px;margin:16px 0 7px}
+.student-resource-card p{color:#72809b;font-size:12px}
+.student-resource-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #edf0f6;padding-top:14px;margin-top:16px;font-size:12px;color:#6d7890}
+.student-exam-meta{display:grid;gap:10px;padding:14px 0;border-top:1px solid #edf0f6;margin-top:14px}
+.student-exam-meta span{display:flex;justify-content:space-between;gap:12px;color:#72809b;font-size:12px}
+.student-exam-meta strong{color:#243457}
+.student-score-box{display:flex;align-items:center;justify-content:space-between;padding:12px;background:#eaf8f1;border-radius:10px;color:#217650;font-size:12px}
+.student-score-box strong{font-size:15px}
+.student-assessment-note{padding:12px;background:#f6f8fc;border-radius:10px;font-size:12px;color:#697792}
+@media(max-width:850px){.student-learning-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.student-class-grid,.student-resource-grid,.student-exam-grid,.student-content-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.student-class-meta{grid-template-columns:1fr 1fr}.student-detail-heading{align-items:flex-start;gap:10px}.student-item-row>.pill{display:none}}
+
+
+.today-message-card { position:relative;overflow:hidden;background:linear-gradient(120deg,#ffffff 0%,#f0f5ff 100%);border:1px solid #dbe5ff; }
+.today-message-top { display:flex;align-items:flex-start;justify-content:space-between;gap:16px; }
+.today-message-top h2 { margin:6px 0 0;font-size:22px;font-weight:800; }
+.today-message-icon { width:54px;height:54px;display:flex;align-items:center;justify-content:center;background:#e5edff;border-radius:17px;font-size:27px;flex-shrink:0; }
+.today-message-quote { margin:18px 0 12px;padding:16px 18px;border-left:4px solid #3457D5;background:rgba(255,255,255,.8);border-radius:0 12px 12px 0;font-size:16px;line-height:1.7;font-weight:650;color:#24365d; }
+.today-message-signoff { margin:0;color:#53658b;font-size:13px;font-weight:650; }
+@media(max-width:600px){.today-message-top h2{font-size:19px}.today-message-quote{font-size:14px;padding:13px}}
+
+.announcement-panel{border:1px solid #cbd8ff!important;box-shadow:0 8px 24px rgba(36,65,150,.08);margin-bottom:20px;position:relative;overflow:hidden}
+.announcement-panel:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(180deg,#3558d4,#8ba5ff)}
+.announcement-panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding-left:5px}
+.announcement-panel-head h2{margin:5px 0;font-size:21px;font-weight:800;color:var(--navy)}
+.announcement-bell{width:48px;height:48px;border-radius:15px;background:#edf1ff;display:grid;place-items:center;font-size:24px;flex-shrink:0}
+.announcement-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 4px 5px}
+.announcement-list{padding-left:5px}
+.announcement-item{display:flex;gap:13px;padding:15px 0;border-top:1px solid var(--border,#e1e7f4)}
+.announcement-item-icon{width:40px;height:40px;border-radius:12px;background:#f0f3ff;display:grid;place-items:center;flex-shrink:0;font-size:19px}
+.announcement-item-body{flex:1;min-width:0}
+.announcement-item-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.announcement-item-head strong{font-weight:800;color:var(--navy)}
+.announcement-item-body p{margin:5px 0 7px;line-height:1.5;color:var(--text,#4e5f7d);white-space:pre-wrap}
+.announcement-date,.announcement-meta,.daily-message-note{font-size:12px;color:var(--muted,#71809d)}
+.today-message-card h3{font-size:18px;margin:4px 0 8px;color:var(--navy)}
+.daily-message-note{margin-top:12px}
+@media(max-width:700px){.announcement-item-head{flex-direction:column;gap:3px}.announcement-panel-head h2{font-size:18px}.announcement-toolbar{align-items:flex-start;flex-wrap:wrap}}
+
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<div class="auth-gate" id="authGate">
+ <div class="auth-shell">
+  <section class="auth-welcome">
+   <div><div class="auth-brand"><img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="FLUENT LAB logo"><span>FLUENT LAB</span></div>
+    <h1>Learn English.<br>Build your future.</h1><p>A welcoming learning space for teachers, students, parents, and school administrators.</p>
+    <div class="auth-benefits"><div><span class="auth-check">✓</span><span>Lessons, resources, and classroom activities</span></div><div><span class="auth-check">✓</span><span>Exams, results, and learning progress</span></div><div><span class="auth-check">✓</span><span>One space for the whole learning community</span></div></div>
+   </div><p>LEARN. PRACTICE. PROGRESS.</p>
+  </section>
+  <section class="auth-panel">
+   <h2 id="authHeading">Welcome back</h2><p class="auth-muted" id="authSubtitle">Choose your account type to continue to your workspace.</p>
+   <div class="auth-roles" role="group" aria-label="Choose account type">
+    <button type="button" class="auth-role active" data-role="Student" onclick="chooseAuthRole('Student')"><span class="auth-emoji">🎓</span>Student</button>
+    <button type="button" class="auth-role" data-role="Teacher" onclick="chooseAuthRole('Teacher')"><span class="auth-emoji">📚</span>Teacher</button>
+    <button type="button" class="auth-role" data-role="Parent" onclick="chooseAuthRole('Parent')"><span class="auth-emoji">👨‍👩‍👧</span>Parent</button>
+    <button type="button" class="auth-role" data-role="Owner" onclick="chooseAuthRole('Owner')"><span class="auth-emoji">🛡️</span>Admin</button>
+   </div>
+   <div class="auth-tabs"><button type="button" id="loginTab" class="auth-tab active" onclick="setAuthMode('login')">Log in</button><button type="button" id="signupTab" class="auth-tab" onclick="setAuthMode('signup')">Sign up</button></div>
+   <form id="authForm">
+    <label class="auth-field">Full name <input id="authName" autocomplete="name" placeholder="Your full name" /></label>
+    <label class="auth-field">Email address <input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com" /></label>
+    <label class="auth-field">Password <input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="Enter your password" /></label>
+    <label class="auth-field" id="confirmField" style="display:none">Confirm password <input id="authConfirm" type="password" minlength="6" autocomplete="new-password" placeholder="Repeat your password" /></label>
+    <div id="roleSignupFields" style="display:none"></div>
+    <div class="auth-admin-note" id="adminNote">Admin access is restricted. Admin accounts cannot be self-created. An existing owner must create or approve an administrator account.</div>
+    <button class="auth-submit" id="authSubmit" type="submit">Log in as Student</button>
+    <button class="auth-google" type="button" onclick="signInWithGoogle()">◎ &nbsp; Continue with Google</button>
+    <div class="auth-feedback" id="authFeedback" role="status"></div>
+   </form>
+   <p class="auth-note" id="authNote">Use the password recovery button if you cannot sign in. Authentication is handled by Supabase.</p><button type="button" class="auth-demo" id="resetPasswordBtn" onclick="sendPasswordReset()">Forgot password?</button>
+   <button type="button" class="auth-demo" onclick="enterDemoPreview()">Explore the website demo without signing in</button>
+  </section>
+ </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <img class="brand-mark" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="FLUENT LAB logo">
+      <div><h2>FLUENT LAB</h2><small>LEARN. PRACTICE. PROGRESS.</small></div>
+    </div>
+    <div class="nav-label">WORKSPACE</div>
+    <nav class="nav-list" id="navigation"></nav>
+    <div class="sidebar-foot">A dedicated space for learning English.<br>FLUENT LAB · Learning platform</div>
+  </aside>
+  <main>
+    <div id="demoModeBanner" class="demo-mode-banner">Demo preview only — switching roles here does not verify a real account. Secure role access requires Supabase Authentication and database policies.</div>
+    <header class="topbar">
+      <div><h3 id="pageTitle">Dashboard</h3><small id="dateLabel"></small></div>
+      <select class="role-select" id="roleSelect" aria-label="Demo preview role" style="display:none">
+        <option value="Owner">Owner / Admin preview</option>
+        <option value="Teacher">Teacher preview</option>
+        <option value="Student">Student preview</option>
+        <option value="Parent">Parent preview</option>
+      </select>
+    </header>
+    <section class="content" id="app"></section>
+  </main>
+</div>
+
+<div class="modal-bg" id="modalBg" role="dialog" aria-modal="true">
+  <div class="modal">
+    <h2 id="modalTitle">Create item</h2>
+    <form id="modalForm">
+      <div id="modalFields"></div>
+      <div class="form-actions">
+        <button class="btn" type="button" onclick="closeModal()">Cancel</button>
+        <button class="btn primary" type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+const KEY = "fluentlab-demo-v1";
+// FLUENT LAB Supabase authentication integration.
+// The publishable key is intended for browser use; never put a service-role key here.
+const FLUENT_SUPABASE_URL = "https://zkolqclsgxjmveoqlzmo.supabase.co";
+const FLUENT_SUPABASE_KEY = "sb_publishable_-zAXsbpPjsZPPLHkk6jOGA_ir4GVTXa";
+const fluentSupabase = window.supabase.createClient(FLUENT_SUPABASE_URL, FLUENT_SUPABASE_KEY);
+let authenticatedUser = null;
+let authenticatedProfile = null;
+let isDemoPreview = true;
+
+function authFeedback(message, isError=false){
+ const el=document.getElementById('authFeedback');
+ if(!el)return;
+ el.textContent=message;el.style.display='block';
+ el.style.background=isError?'#fff0f0':'#eaf8f0';
+ el.style.color=isError?'#9b1c1c':'#12613d';
+}
+function roleToDb(roleName){return ({Owner:'owner',Teacher:'teacher',Student:'student',Parent:'parent'})[roleName]||'student';}
+function roleFromDb(roleName){return ({owner:'Owner',teacher:'Teacher',student:'Student',parent:'Parent'})[String(roleName||'student').toLowerCase()]||'Student';}
+async function signInWithGoogle(){
+ try{
+  const {error}=await fluentSupabase.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});
+  if(error)throw error;
+ }catch(e){authFeedback(e.message||'Google sign-in could not be started. Check that Google is enabled in Supabase Authentication.',true);}
+}
+async function sendPasswordReset(){
+ const email=document.getElementById('authEmail').value.trim();
+ if(!email){authFeedback('Enter your email address first, then choose Forgot password?',true);return;}
+ try{
+  const {error}=await fluentSupabase.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+  if(error)throw error;
+  authFeedback('If this email is registered, a password-reset link has been sent. Check your inbox and spam folder.');
+ }catch(e){authFeedback(e.message||'Could not send the reset email.',true);}
+}
+async function finishSupabaseLogin(){
+ const {data:{user},error:userError}=await fluentSupabase.auth.getUser();
+ if(userError)throw userError;
+ if(!user){document.getElementById('authGate').classList.remove('hidden');return;}
+ const {data:prof,error}=await fluentSupabase.from('profiles').select('username,email,role,status,"full name"').eq('username',user.id).maybeSingle();
+ if(error)throw error;
+ if(!prof){await fluentSupabase.auth.signOut();throw new Error('Your account profile is not ready yet. Please contact the FLUENT LAB owner.');}
+ if(prof.status!=='active'){
+  await fluentSupabase.auth.signOut();
+  document.getElementById('authGate').classList.remove('hidden');
+  authFeedback(prof.status==='suspended'?'This account is suspended. Contact the FLUENT LAB owner.':'Your email is signed in, but your account is awaiting owner approval.',true);
+  return;
+ }
+ authenticatedUser=user;authenticatedProfile=prof;isDemoPreview=false;
+ role=roleFromDb(prof.role);currentPage='Dashboard';
+ document.getElementById('authGate').classList.add('hidden');
+ const selector=document.getElementById('roleSelect');selector.value=role;selector.style.display='none';
+ const banner=document.getElementById('demoModeBanner');
+ banner.textContent='Signed in securely with Supabase. IMPORTANT: this design preview still uses sample/local data for classroom content; records are not yet synced to the database.';
+ banner.classList.add('show');
+ addSupabaseSignOutControl();render();
+}
+function addSupabaseSignOutControl(){
+ let b=document.getElementById('supabaseSignOut');
+ if(!b){b=document.createElement('button');b.id='supabaseSignOut';b.type='button';b.className='btn';b.textContent='Sign out';b.style.marginLeft='10px';document.querySelector('.topbar').appendChild(b);}
+ b.onclick=async()=>{try{await fluentSupabase.auth.signOut();authenticatedUser=null;authenticatedProfile=null;isDemoPreview=true;b.remove();document.getElementById('authGate').classList.remove('hidden');document.getElementById('roleSelect').style.display='none';document.getElementById('demoModeBanner').classList.remove('show');document.getElementById('authPassword').value='';authFeedback('You have signed out.');}catch(e){alert(e.message||'Sign out failed.');}};
+}
+
+const initialData = {
+  classes: [
+    {id:1,name:"General English A1",level:"A1",teacher:"Govhar Yaqubova",students:12,status:"Active"},
+    {id:2,name:"Primary English",level:"Primary",teacher:"Govhar Yaqubova",students:9,status:"Active"},
+    {id:3,name:"Exam Preparation",level:"B1",teacher:"Govhar Yaqubova",students:8,status:"Active"}
+  ],
+  students: [
+    {id:1,name:"Aylin M.",email:"aylin.demo@example.com",className:"General English A1",status:"Active",score:86},
+    {id:2,name:"Murad A.",email:"murad.demo@example.com",className:"Primary English",status:"Pending",score:0},
+    {id:3,name:"Leyla R.",email:"leyla.demo@example.com",className:"Exam Preparation",status:"Active",score:92}
+  ],
+  resources: [
+    {id:1,title:"Present Simple — Notes",category:"Grammar",course:"General English A1",type:"PDF"},
+    {id:2,title:"Hobbies & Free Time",category:"Vocabulary",course:"General English A1",type:"Worksheet"},
+    {id:3,title:"Reading: The Environment",category:"Reading",course:"Exam Preparation",type:"PDF"}
+  ],
+  exams: [
+    {id:1,title:"Vocabulary Review",course:"General English A1",maxScore:20,status:"Published"},
+    {id:2,title:"Grammar Unit Test",course:"Primary English",maxScore:30,status:"Draft"}
+  ],
+  results: [
+    {id:1,student:"Aylin M.",exam:"Vocabulary Review",score:17,maxScore:20},
+    {id:2,student:"Leyla R.",exam:"Vocabulary Review",score:19,maxScore:20}
+  ],
+  activity: [
+    {title:"Welcome to FLUENT LAB",description:"Your learning workspace is ready to customize.",time:"Just now"}
+  ],
+  announcements: [
+    {id:1,title:"Welcome to a new learning day!",message:"Check your classroom for new tasks, resources, and upcoming exams.",audience:"all",createdAt:new Date().toISOString(),author:"FLUENT LAB"}
+  ]
+};
+let db = loadData();
+if(!Array.isArray(db.announcements)) db.announcements = structuredClone(initialData.announcements || []);
+let role = "Student";
+let currentPage = "Dashboard";
+let currentStudentClassId = null;
+let currentStudentClassSection = "resources";
+let formConfig = null;
+let currentExamId = null;
+let parentConversations = [
+ {id:1,teacher:"Ms. Govhar Yaqubova",subject:"Primary English",preview:"Hello! Feel free to message me about learning progress.",messages:[{from:"teacher",text:"Hello! Feel free to message me about learning progress.",time:"Welcome"}]}
+];
+let activeConversationId = 1;
+let pendingMessageFiles = [];
+let mediaRecorder = null;
+let audioChunks = [];
+let voiceRecording = false;
+
+function loadData(){
+  try {
+    const saved = localStorage.getItem(KEY);
+    return saved ? JSON.parse(saved) : structuredClone(initialData);
+  } catch(e) { return structuredClone(initialData); }
+}
+function saveData(){ localStorage.setItem(KEY,JSON.stringify(db)); }
+function escapeHtml(value){
+  return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function safeText(value){ return escapeHtml(value); }
+const navByRole = {
+  Owner:["Dashboard","Classrooms","Students","Resources","Exams & Results","Progress","Messages","Settings"],
+  Teacher:["Dashboard","Classrooms","Students","Resources","Exams & Results","Progress","Messages","Settings"],
+  Student:["Dashboard","My Classes","Resources","My Exams","My Progress","Messages","Settings"],
+  Parent:["Dashboard","My Children","Results & Progress","Messages","Settings"]
+};
+const icons = {
+  "Dashboard":"🏠","Classrooms":"🏫","My Classes":"🏫","Students":"🎓",
+  "Resources":"📚","Exams & Results":"📑","My Exams":"📝","Progress":"📊",
+  "My Progress":"📈","Settings":"⚙️","My Children":"👨‍👩‍👧",
+  "Results & Progress":"📈","Messages":"✉️"
+};
+function updateNavigation(){
+  document.getElementById("navigation").innerHTML=navByRole[role].map(item=>
+    `<button class="nav-btn ${item===currentPage?"active":""}" onclick="navigate('${item}')">
+    <span>${icons[item]||"•"}</span>${item}</button>`).join("");
+}
+function navigate(page){currentPage=page;render();}
+function changeRole(value){
+  role=value;
+  currentPage="Dashboard";
+  render();
+}
+function recordActivity(title,description){
+  db.activity.unshift({title,description,time:new Date().toLocaleString()});
+  db.activity=db.activity.slice(0,30);
+}
+function metric(label,value,icon,note){
+ return `<div class="card"><div class="metric-top"><span class="metric-label">${label}</span><div class="metric-icon">${icon}</div></div><div class="metric-value">${value}</div><div class="metric-note">${note}</div></div>`;
+}
+function section(title,action=""){
+ return `<div class="section-head"><h2>${title}</h2>${action}</div>`;
+}
+function activityPanel(){
+ const rows=db.activity.slice(0,5).map(a=>`<div class="activity"><div class="dot"></div><div><strong>${safeText(a.title)}</strong><p>${safeText(a.description)}<br>${safeText(a.time)}</p></div></div>`).join("");
+ return `<div class="card">${section("Recent activity")} ${rows||'<div class="empty">No activity yet.</div>'}</div>`;
+}
+const dailyMotivations = [
+  {title:"Small steps make big progress",quote:"Every small step you take today brings you closer to your goals.",signoff:"Keep learning, keep trying, and be proud of your progress! 💙"},
+  {title:"Mistakes help you grow",quote:"You do not have to be perfect to make progress.",signoff:"Learn from every mistake and try again. You can do this! 🌱"},
+  {title:"Your effort matters",quote:"Every word you practise and every question you ask makes you stronger.",signoff:"Keep going — your effort is building your future. ⭐"},
+  {title:"Believe in yourself",quote:"You are capable of learning more than you know.",signoff:"Be curious, be brave, and celebrate your progress. 💙"},
+  {title:"Progress over perfection",quote:"Learning takes time, and every day is a new chance to improve.",signoff:"One page, one word, one step at a time! 📚"},
+  {title:"Keep your curiosity alive",quote:"Questions are a wonderful part of learning.",signoff:"Explore, discover, and never be afraid to ask. ✨"},
+  {title:"You are getting stronger",quote:"The practice you do today is helping tomorrow's you.",signoff:"Keep practising — your future self will thank you. 🌟"}
+];
+function getDailyMotivation(){
+ const now=new Date();
+ const dayNumber=Math.floor(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate())/86400000);
+ return dailyMotivations[((dayNumber%dailyMotivations.length)+dailyMotivations.length)%dailyMotivations.length];
+}
+function announcementPanel(){
+ const teacherView=role==="Teacher"||role==="Owner";
+ const audience=role==="Parent"?"parent":"student";
+ const rows=(db.announcements||[]).filter(a=>teacherView ? (role==="Owner"||a.audience==="teacher"||a.audience==="all") : (a.audience==="all"||a.audience===audience))
+   .sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
+ const title=teacherView?(role==="Teacher"?"Teacher announcements & notifications":"Announcements & notifications") : "Announcements & notifications";
+ const subtitle=teacherView?(role==="Teacher"?"Teaching updates, reminders, and messages for your classes.":"Important workspace updates and announcements.") : "Important updates from your learning team, newest first.";
+ const action=teacherView?`<button class="btn primary" onclick="createAnnouncement()">＋ New announcement</button>`:"";
+ const list=rows.length?rows.map(a=>`<article class="announcement-item"><div class="announcement-item-icon">${a.audience==="teacher"?"🧑‍🏫":"📣"}</div><div class="announcement-item-body"><div class="announcement-item-head"><strong>${safeText(a.title)}</strong><span class="announcement-date">${a.createdAt?new Date(a.createdAt).toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"}):"Date not set"}</span></div><p>${safeText(a.message)}</p><div class="announcement-meta">${safeText(a.author|| (teacherView?"FLUENT LAB":"Teacher"))}</div></div></article>`).join("") : `<div class="empty">No announcements yet. ${teacherView?"Post an update for your classes here.":"Check back here for new updates."}</div>`;
+ return `<section class="announcement-panel card"><div class="announcement-panel-head"><div><div class="eyebrow">${teacherView?"TEACHING UPDATES":"STUDENT & FAMILY UPDATES"}</div><h2>${title}</h2><p class="subtitle">${subtitle}</p></div><div class="announcement-bell" aria-hidden="true">🔔</div></div><div class="announcement-toolbar">${action}<span class="pill">${rows.length} ${rows.length===1?"update":"updates"}</span></div><div class="announcement-list">${list}</div></section>`;
+}
+function createAnnouncement(){
+ if(role!=="Teacher"&&role!=="Owner"){alert("Only teachers and admins can post announcements.");return;}
+ const title=prompt("Announcement title:");if(!title||!title.trim())return;
+ const message=prompt("Write the announcement or notification:");if(!message||!message.trim())return;
+ const audienceInput=prompt("Who should see it? Type: all, student, parent, or teacher","all");
+ const audience=(audienceInput||"all").trim().toLowerCase();
+ if(!["all","student","parent","teacher"].includes(audience)){alert("Please choose all, student, parent, or teacher.");return;}
+ db.announcements=db.announcements||[];
+ db.announcements.push({id:Date.now(),title:title.trim(),message:message.trim(),audience,createdAt:new Date().toISOString(),author:role==="Teacher"?"Teacher":"Admin"});
+ saveData();render();
+}
+
+function dashboard(){
+ const activeStudents=db.students.filter(s=>s.status==="Active").length;
+ const pending=db.students.filter(s=>s.status==="Pending").length;
+ const average=db.results.length?Math.round(db.results.reduce((n,r)=>n+r.score/r.maxScore*100,0)/db.results.length):0;
+ let metrics="",details="";
+ if(role==="Owner"){
+  metrics=metric("Active students",activeStudents,"🧑‍🎓","Approved student accounts")
+   +metric("Classrooms",db.classes.length,"🏫","Created learning groups")
+   +metric("Learning resources",db.resources.length,"📚","Uploaded resource records")
+   +metric("Pending approvals",pending,"📋","Require owner review");
+  details=`<div class="card">${section("Registration approvals",`<span class="pill orange">${pending} pending</span>`)}
+  ${db.students.filter(s=>s.status==="Pending").map(s=>`<div class="activity"><div class="avatar">${safeText(s.name[0])}</div><div style="flex:1"><strong>${safeText(s.name)}</strong><p>${safeText(s.email)} · ${safeText(s.className)}</p></div><button class="btn primary" onclick="approveStudent(${s.id})">Approve</button></div>`).join("")||'<div class="empty">No pending registrations.</div>'}</div>`;
+ } else if(role==="Teacher"){
+  metrics=metric("My students",activeStudents,"🧑‍🎓","Demo workspace count")+metric("Classrooms",db.classes.length,"🏫","Learning groups")+metric("Resources",db.resources.length,"📚","Learning materials")+metric("Average result",average+"%","↗","Based on recorded demo results");
+  details=`<div class="card">${section("Teaching overview")}<p class="subtitle">Create learning materials, manage your classes, and record assessment results.</p></div>`;
+ } else if(role==="Student"){
+  metrics=metric("My classes",db.classes.length,"▦","Demo preview only")+metric("My resources",db.resources.length,"▤","Available in this prototype")+metric("My results",db.results.length,"✓","Demo assessment results")+metric("Average score",average+"%","↗","Demo result calculation");
+  const daily=getDailyMotivation();
+  details=`<div class="card today-message-card"><div class="today-message-top"><div><div class="eyebrow">A LITTLE ENCOURAGEMENT</div><h2>Today’s message</h2><p class="subtitle">${new Date().toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"})}</p></div><div class="today-message-icon" aria-hidden="true">🌟</div></div><h3>${safeText(daily.title)}</h3><div class="today-message-quote">“${safeText(daily.quote)}”</div><p class="today-message-signoff">${safeText(daily.signoff)}</p><p class="daily-message-note">A fresh message appears automatically each new day.</p></div><div class="card">${section("Continue learning")}<p class="subtitle">Open your classroom to find assigned resources, published exams, your results, and teacher notes.</p></div>`;
+ } else {
+  metrics=metric("Children",1,"♡","Demo parent view")+metric("Courses",db.classes.length,"▦","Demo workspace count")+metric("Assessment results",db.results.length,"✓","Demo results")+metric("Average score",average+"%","↗","Demo result calculation");
+  details=`<div class="card">${section("Child's learning overview")}<p class="subtitle">In the production system, this area will show only children linked and approved by the owner.</p></div>`;
+ }
+ return `${announcementPanel()}<div class="home-brand-banner"><img src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="FLUENT LAB — Learn English. Build Your Future."></div>
+ <div class="eyebrow">YOUR LEARNING WORKSPACE</div>
+ <h1>${role==="Owner"?"Welcome to FLUENT LAB":role==="Teacher"?"Teaching dashboard":role==="Student"?"Your learning space":"Parent overview"}</h1>
+ <p class="subtitle">Your English learning workspace, organized in one place.</p>
+ <div class="grid">${metrics}</div>
+ <div class="two-col"><div>${details}<div style="height:16px"></div>${activityPanel()}</div>
+ <div class="card">${section("Quick actions")}
+ ${role==="Owner"||role==="Teacher"?`
+ <div class="activity"><div class="metric-icon">▦</div><div><strong>Manage classrooms</strong><p>Create classes and organize learning groups.</p><button class="btn" onclick="navigate('Classrooms')">Open classrooms →</button></div></div>
+ <div class="activity"><div class="metric-icon">▤</div><div><strong>Add a resource</strong><p>Record a worksheet, video, or lesson note.</p><button class="btn" onclick="openCreate('resource')">Add resource →</button></div></div>
+ <div class="activity"><div class="metric-icon">✓</div><div><strong>Create an exam</strong><p>Set up an assessment record.</p><button class="btn" onclick="openCreate('exam')">Create exam →</button></div></div>
+ `:`<div class="activity"><div class="metric-icon">▤</div><div><strong>Learning resources</strong><p>Explore worksheets and lesson materials.</p><button class="btn" onclick="navigate('Resources')">Browse resources →</button></div></div>`}
+ </div></div>
+ <div class="notice"><strong>Prototype notice:</strong> Role selection is for previewing layouts only, not secure authentication. Data is stored in this browser and is not shared with other users. Do not enter real student information.</div>`;
+}
+
+const FLUENT_FILE_DB="fluentlab-files-v1";
+function openFluentFileDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(FLUENT_FILE_DB,1);req.onupgradeneeded=()=>{if(!req.result.objectStoreNames.contains("files"))req.result.createObjectStore("files");};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error);});}
+async function storeResourceBlob(key,file){const idb=await openFluentFileDB();return new Promise((resolve,reject)=>{const tx=idb.transaction("files","readwrite");tx.objectStore("files").put(file,key);tx.oncomplete=()=>{idb.close();resolve(true);};tx.onerror=()=>{idb.close();reject(tx.error);};});}
+async function getResourceBlob(key){const idb=await openFluentFileDB();return new Promise((resolve,reject)=>{const tx=idb.transaction("files","readonly");const req=tx.objectStore("files").get(key);req.onsuccess=()=>{idb.close();resolve(req.result||null);};req.onerror=()=>{idb.close();reject(req.error);};});}
+async function openStudentResource(id){const item=db.resources.find(r=>Number(r.id)===Number(id));if(!item)return; if(item.fileStorageKey){try{const blob=await getResourceBlob(item.fileStorageKey);if(blob){const url=URL.createObjectURL(blob);const win=window.open(url,"_blank","noopener");if(!win){const a=document.createElement("a");a.href=url;a.download=item.fileName||item.title;a.click();}setTimeout(()=>URL.revokeObjectURL(url),60000);return;}}catch(err){console.error(err);}}
+ const url=item.url||item.link||item.fileUrl;if(url){window.open(url,"_blank","noopener");return;}showStudentViewer(`<div class="viewer-head"><div><div class="eyebrow">LEARNING RESOURCE</div><h2>${safeText(item.title)}</h2></div><button class="btn" onclick="closeStudentViewer()">Close</button></div><p>This resource record has no attached file or web link yet.</p><p>Ask your teacher to edit the resource and attach the actual PDF, worksheet, video, or a valid link. A filename by itself is not enough to open the material.</p>`);}
+function showStudentViewer(html){let el=document.getElementById("studentViewer");if(!el){el=document.createElement("div");el.id="studentViewer";el.className="modal-bg";el.style.zIndex="10000";el.innerHTML='<div class="modal-card" role="dialog" aria-modal="true"><div id="studentViewerContent"></div></div>';document.body.appendChild(el);el.addEventListener("click",e=>{if(e.target===el)closeStudentViewer();});}el.querySelector("#studentViewerContent").innerHTML=html;el.style.display="flex";}
+function closeStudentViewer(){const el=document.getElementById("studentViewer");if(el)el.style.display="none";}
+function openStudentExam(id){const exam=db.exams.find(e=>Number(e.id)===Number(id));if(!exam)return;const questions=Array.isArray(exam.questions)?exam.questions:[];const body=questions.length?questions.map((q,i)=>`<div class="question-card"><div class="question-number">Q${i+1}</div><div class="question-content"><h3>${safeText(q.text||"Question")}</h3>${q.type==="Multiple choice"?`<div class="question-options">${(q.options||[]).filter(Boolean).map((o,j)=>`<label class="question-option"><input type="radio" name="student-q-${q.id||i}" value="${safeText(o)}"> ${String.fromCharCode(65+j)}. ${safeText(o)}</label>`).join("")}</div>`:q.type==="True / False"?`<label><input type="radio" name="student-q-${q.id||i}" value="True"> True</label> &nbsp; <label><input type="radio" name="student-q-${q.id||i}" value="False"> False</label>`:`<textarea rows="3" placeholder="Write your answer here" style="width:100%"></textarea>`}</div></div>`).join(""):'<p>This exam has no questions added yet. Your teacher needs to add questions before it can be taken.</p>';
+showStudentViewer(`<div class="viewer-head"><div><div class="eyebrow">STUDENT ASSESSMENT</div><h2>${safeText(exam.title)}</h2><p>${safeText(exam.course||"")} · ${Number(exam.maxScore||0)} points${exam.duration?" · "+Number(exam.duration)+" minutes":""}</p></div><button class="btn" onclick="closeStudentViewer()">Close</button></div>${exam.instructions?`<p>${safeText(exam.instructions)}</p>`:""}<div class="student-exam-question-list">${body}</div><p class="notice">Preview only: answers are not submitted or graded yet. Secure exam submission must be connected to Supabase.</p>`);}
+function getPreviewStudent(){
+ const active=db.students.filter(s=>s.status==="Active");
+ return active[0]||{name:"Student",className:db.classes[0]?.name||"",score:0};
+}
+function studentClassroomsPage(){
+ const student=getPreviewStudent();
+ const ownClasses=db.classes.filter(c=>c.name===student.className);
+ const classes=ownClasses.length?ownClasses:db.classes.slice(0,1);
+ if(currentStudentClassId!==null){
+  const selected=classes.find(c=>String(c.id)===String(currentStudentClassId))||classes.find(c=>c.name===currentStudentClassId);
+  if(selected) return studentClassDetail(selected);
+  currentStudentClassId=null;
+ }
+ const classNames=classes.map(c=>c.name);
+ const resources=db.resources.filter(r=>classNames.includes(r.course));
+ const exams=db.exams.filter(e=>classNames.includes(e.course)&&e.status==="Published");
+ const results=db.results.filter(r=>r.student===student.name);
+ return `<div class="eyebrow">MY LEARNING SPACE</div><h1>My Classroom</h1><p class="subtitle">Welcome back, ${safeText(student.name)}. Open your classroom to see your teacher's resources, assignments, notes, exams, and results in date order.</p>
+ <section class="classroom-hero student-class-hero"><div class="classroom-hero-copy"><div class="eyebrow">STUDENT WORKSPACE</div><h2>Your classes, tasks, and learning materials.</h2><p>Choose your classroom to see everything your teacher has shared, organized by the most recent dates. This is a view-only space.</p></div><div class="classroom-hero-art" aria-hidden="true">🎒</div></section>
+ <div class="student-learning-stats"><div class="card"><span class="student-stat-icon">🏫</span><small>MY CLASSROOMS</small><strong>${classes.length}</strong><span>Assigned to you</span></div><div class="card"><span class="student-stat-icon">📚</span><small>MY RESOURCES</small><strong>${resources.length}</strong><span>Shared by your teacher</span></div><div class="card"><span class="student-stat-icon">📝</span><small>AVAILABLE EXAMS</small><strong>${exams.length}</strong><span>Published assessments</span></div><div class="card"><span class="student-stat-icon">📊</span><small>MY RESULTS</small><strong>${results.length}</strong><span>Recorded results</span></div></div>
+ <div class="student-class-grid">${classes.map(c=>`<article class="card student-class-card"><div class="student-class-card-top"><span class="student-class-icon">🏫</span><span class="pill green">${safeText(c.status||"Active")}</span></div><h2>${safeText(c.name)}</h2><p>${safeText(c.description||"Your teacher's classroom for lessons, assignments, and resources.")}</p><div class="student-class-meta"><span><small>LEVEL</small><strong>${safeText(c.level||"—")}</strong></span><span><small>TEACHER</small><strong>${safeText(c.teacher||"Your teacher")}</strong></span><span><small>SCHEDULE</small><strong>${safeText(c.schedule||"See teacher's instructions")}</strong></span></div><div class="student-class-actions"><button class="btn primary" onclick="openStudentClass('${String(c.id??c.name).replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">Open classroom →</button></div></article>`).join("")||'<div class="card empty">Your assigned classroom will appear here once your account is linked to a class.</div>'}</div>`;
+}
+function studentDateValue(item){return item.dueDate||item.date||item.assignedDate||item.createdAt||item.updatedAt||item.publishedAt||"";}
+function studentDateLabel(item){const d=studentDateValue(item);if(!d)return "Date not set";const parsed=new Date(d);return Number.isNaN(parsed.getTime())?safeText(d):parsed.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"});}
+function newestFirst(items){return [...items].sort((a,b)=>{const da=new Date(studentDateValue(a)||0).getTime()||0, dbb=new Date(studentDateValue(b)||0).getTime()||0;return dbb-da;});}
+function studentClassDetail(c){
+ const allClassResources=newestFirst(db.resources.filter(r=>r.course===c.name));
+ const resources=allClassResources.filter(r=>!/note|announcement|teacher note|lesson note/i.test(`${r.category||""} ${r.type||""} ${r.title||""}`));
+ const exams=newestFirst(db.exams.filter(e=>e.course===c.name&&e.status==="Published"));
+ const student=getPreviewStudent();
+ const results=newestFirst(db.results.filter(r=>r.student===student.name&&exams.some(e=>e.title===r.exam)));
+ const notes=newestFirst(allClassResources.filter(r=>/note|announcement|teacher note|lesson note/i.test(`${r.category||""} ${r.type||""} ${r.title||""}`)));
+ const resourceRows=items=>items.map(r=>`<button type="button" class="student-item-row student-clickable-item" onclick="openStudentResource(${Number(r.id)})"><span class="student-file-icon">${r.type==="Video"?"▶️":r.type==="PDF"?"📄":/note/i.test(`${r.category||""} ${r.title||""}`)?"🗒️":"📘"}</span><span class="student-item-main"><strong>${safeText(r.title)}</strong><small>${safeText(r.category||"Learning material")} · ${safeText(r.type||"Resource")} · ${studentDateLabel(r)}</small>${r.description?`<small>${safeText(r.description)}</small>`:""}</span><span class="student-open-label">Open ↗</span></button>`).join("")||'<div class="student-empty-inline">Nothing has been shared here yet.</div>';
+ return `<button class="text-back" onclick="backToStudentClasses()">← Back to My Classrooms</button><div class="eyebrow">YOUR CLASSROOM</div><h1>${safeText(c.name)}</h1><p class="subtitle">Your classroom content is separated into sections and sorted newest first when dates are available.</p><section class="classroom-hero student-class-hero"><div class="classroom-hero-copy"><div class="eyebrow">${safeText(c.level||"CLASSROOM")}</div><h2>${safeText(c.subject||c.name)}</h2><p>Teacher: ${safeText(c.teacher||"Your teacher")} · ${safeText(c.schedule||"Schedule not specified")}</p></div><div class="classroom-hero-art" aria-hidden="true">🏫</div></section>
+ <div class="student-class-tabs" role="tablist" aria-label="Classroom sections"><button type="button" role="tab" class="${currentStudentClassSection==="resources"?"active":""}" aria-selected="${currentStudentClassSection==="resources"}" onclick="setStudentClassSection('resources')">📚 Resources</button><button type="button" role="tab" class="${currentStudentClassSection==="exams"?"active":""}" aria-selected="${currentStudentClassSection==="exams"}" onclick="setStudentClassSection('exams')">📝 Exams</button><button type="button" role="tab" class="${currentStudentClassSection==="results"?"active":""}" aria-selected="${currentStudentClassSection==="results"}" onclick="setStudentClassSection('results')">📊 My Results</button><button type="button" role="tab" class="${currentStudentClassSection==="notes"?"active":""}" aria-selected="${currentStudentClassSection==="notes"}" onclick="setStudentClassSection('notes')">🗒️ Teacher Notes</button></div>
+ <p class="student-section-intro">Choose a section above. Items are listed by date, newest first; items without a date appear last.</p>
+ <section id="student-resources" class="student-detail-section" ${currentStudentClassSection!=="resources"?'hidden':''}><div class="student-detail-heading"><div><div class="eyebrow">LEARNING MATERIALS</div><h2>Resources & assignments</h2><p>Worksheets, videos, files, and tasks shared by your teacher.</p></div><span class="pill">${resources.length} items</span></div><article class="card student-content-card">${resourceRows(resources)}</article></section>
+ <section id="student-exams" class="student-detail-section" ${currentStudentClassSection!=="exams"?'hidden':''}><div class="student-detail-heading"><div><div class="eyebrow">ASSESSMENTS</div><h2>Exams & quizzes</h2><p>Published exams assigned to this classroom.</p></div><span class="pill">${exams.length} exams</span></div><article class="card student-content-card">${exams.map(e=>{const result=db.results.find(r=>r.student===student.name&&r.exam===e.title);return `<button type="button" class="student-item-row student-clickable-item" onclick="openStudentExam(${Number(e.id)})"><span class="student-file-icon">📝</span><span class="student-item-main"><strong>${safeText(e.title)}</strong><small>${safeText(e.type||"Assessment")} · ${Number(e.maxScore||0)} points${e.duration?" · "+Number(e.duration)+" min":""} · ${studentDateLabel(e)}</small>${e.instructions?`<small>${safeText(e.instructions)}</small>`:""}</span><span class="student-open-label">${result?"Result recorded":"Open exam ↗"}</span></button>`}).join("")||'<div class="student-empty-inline">No published exams have been assigned to this classroom yet.</div>'}</article></section>
+ <section id="student-results" class="student-detail-section" ${currentStudentClassSection!=="results"?'hidden':''}><div class="student-detail-heading"><div><div class="eyebrow">YOUR PERFORMANCE</div><h2>My results</h2><p>Only your own recorded results are shown here.</p></div><span class="pill">${results.length} results</span></div><article class="card student-content-card">${results.map(r=>{const pct=Math.round(Number(r.score||0)/Math.max(1,Number(r.maxScore||1))*100);return `<div class="student-item-row"><span class="student-file-icon">🏅</span><div><strong>${safeText(r.exam)}</strong><small>Score: ${r.score}/${r.maxScore} · ${studentDateLabel(r)}</small><div class="progress"><span style="width:${pct}%"></span></div></div><b>${pct}%</b></div>`}).join("")||'<div class="student-empty-inline">Your results will appear here after your teacher records them.</div>'}</article></section>
+ <section id="student-teacher-notes" class="student-detail-section" ${currentStudentClassSection!=="notes"?'hidden':''}><div class="student-detail-heading"><div><div class="eyebrow">TEACHER UPDATES</div><h2>Teacher notes & announcements</h2><p>Lesson notes and announcements from your teacher.</p></div><span class="pill">${notes.length} notes</span></div><article class="card student-content-card">${resourceRows(notes)}</article></section>`;
+}
+function openStudentClass(name){currentStudentClassId=name;currentStudentClassSection="resources";render();window.scrollTo({top:0,behavior:"smooth"});}
+function setStudentClassSection(section){if(!["resources","exams","results","notes"].includes(section))return;currentStudentClassSection=section;render();window.scrollTo({top:0,behavior:"smooth"});}
+function backToStudentClasses(){currentStudentClassId=null;render();window.scrollTo({top:0,behavior:"smooth"});}
+
+function classroomsPage(){
+ if(role==="Student") return studentClassroomsPage();
+ const active=db.classes.filter(c=>(c.status||"Active")==="Active").length;
+ const totalStudents=db.classes.reduce((n,c)=>n+Number(c.students||0),0);
+ return `<div class="eyebrow">LEARNING MANAGEMENT</div><h1>Classrooms</h1><p class="subtitle">Build organized learning spaces for every course, group, and level.</p>
+ <section class="classroom-hero"><div class="classroom-hero-copy"><div class="eyebrow">YOUR LEARNING SPACE</div><h2>Every class has room to grow.</h2><p>Create a classroom, assign a teacher, set the level and schedule, and keep your learning groups organized in one place.</p><div class="toolbar" style="margin:17px 0 0"><button class="btn primary" onclick="openCreate('class')">＋ Create classroom</button><button class="btn" onclick="navigate('Students')">View students →</button></div></div><div class="classroom-hero-art" aria-hidden="true">🏫</div></section>
+ <div class="grid" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:18px 0"><div class="card"><div class="metric-top"><span class="metric-label">TOTAL CLASSROOMS</span><span class="metric-icon">🏫</span></div><div class="metric-value">${db.classes.length}</div><div class="metric-note">Learning groups in your workspace</div></div><div class="card"><div class="metric-top"><span class="metric-label">ACTIVE CLASSES</span><span class="metric-icon">📘</span></div><div class="metric-value">${active}</div><div class="metric-note">Currently marked as active</div></div><div class="card"><div class="metric-top"><span class="metric-label">STUDENT PLACES</span><span class="metric-icon">👩‍🎓</span></div><div class="metric-value">${totalStudents}</div><div class="metric-note">Students listed across classes</div></div></div>
+ <div class="classroom-tools"><div><h2 style="font-size:17px;margin:0 0 5px">All classrooms</h2><div class="classroom-count">${db.classes.length} learning group${db.classes.length===1?"":"s"}</div></div><div class="classroom-tools-left"><input class="search" id="classroomSearch" placeholder="Search classrooms…" oninput="filterClassrooms()" aria-label="Search classrooms"><select class="search" id="classroomStatusFilter" onchange="filterClassrooms()" aria-label="Filter by status"><option value="all">All statuses</option><option value="Active">Active</option><option value="Upcoming">Upcoming</option><option value="Paused">Paused</option><option value="Archived">Archived</option></select></div></div>
+ <div class="course-grid" id="classroomGrid">${classroomCards(db.classes)}<button class="card create-class-card" onclick="openCreate('class')"><span class="create-class-plus">＋</span><strong>Create a new classroom</strong><small>Set up a new learning group and add its details.</small></button></div>`;
+}
+function classroomCards(items){return items.map(c=>`<article class="card course-card classroom-card"><div class="classroom-card-top"><div class="course-icon">🏫</div><span class="pill ${(c.status||"Active")==="Active"?"green":(c.status||"")==="Upcoming"?"orange":"gray"}">${safeText(c.status||"Active")}</span></div><h3>${safeText(c.name)}</h3><p class="classroom-description">${safeText(c.description||c.subject||"A learning space for lessons, activities, and progress.")}</p><div class="classroom-meta"><div class="classroom-meta-item"><small>LEVEL / GRADE</small><strong>${safeText(c.level||"Not set")}</strong></div><div class="classroom-meta-item"><small>STUDENTS</small><strong>👥 ${Number(c.students||0)}${c.capacity?" / "+Number(c.capacity):""}</strong></div><div class="classroom-meta-item"><small>TEACHER</small><strong>${safeText(c.teacher||"Unassigned")}</strong></div><div class="classroom-meta-item"><small>SCHEDULE</small><strong>${safeText(c.schedule||"Not set")}</strong></div></div><div class="progress"><span style="width:${Math.max(0,Math.min(100,c.capacity?Number(c.students||0)/Number(c.capacity)*100:65))}%"></span></div><div class="classroom-card-actions"><button class="btn primary" onclick="editClass(${c.id})">Edit classroom</button><button class="btn" onclick="navigate('Students')">Students →</button></div></article>`).join("")||'<div class="card empty">No classrooms match your search. Try another filter or create a new classroom.</div>';}
+function filterClassrooms(){const q=(document.getElementById("classroomSearch")?.value||"").toLowerCase();const status=document.getElementById("classroomStatusFilter")?.value||"all";const list=db.classes.filter(c=>(`${c.name} ${c.level} ${c.teacher} ${c.subject||""}`).toLowerCase().includes(q)&&(status==="all"||(c.status||"Active")===status));document.getElementById("classroomGrid").innerHTML=classroomCards(list)+`<button class="card create-class-card" onclick="openCreate('class')"><span class="create-class-plus">＋</span><strong>Create a new classroom</strong><small>Set up a new learning group and add its details.</small></button>`; }
+function studentsPage(){
+ return `<div class="eyebrow">USER MANAGEMENT</div><h1>Students</h1><p class="subtitle">Review demo student profiles and registration statuses.</p>
+ <div class="toolbar"><input class="search" id="studentSearch" placeholder="Search students..." oninput="filterStudents()">
+ <button class="btn primary" onclick="openCreate('student')">＋ Add student</button></div>
+ <div class="card table-wrap"><table><thead><tr><th>Student</th><th>Class</th><th>Status</th><th>Average</th><th>Action</th></tr></thead><tbody id="studentRows">${studentRows(db.students)}</tbody></table></div>`;
+}
+function studentRows(items){
+ return items.map(s=>`<tr><td><div class="person"><div class="avatar">${safeText(s.name[0])}</div><div><strong>${safeText(s.name)}</strong><small>${safeText(s.email)}</small></div></div></td><td>${safeText(s.className)}</td><td><span class="pill ${s.status==="Active"?"green":s.status==="Pending"?"orange":"gray"}">${safeText(s.status)}</span></td><td>${s.score?s.score+"%":"—"}</td><td>${s.status==="Pending"?`<button class="btn primary" onclick="approveStudent(${s.id})">Approve</button>`:`<button class="btn" onclick="viewStudent(${s.id})">View</button>`}</td></tr>`).join("")||'<tr><td colspan="5" class="empty">No students found.</td></tr>';
+}
+function filterStudents(){
+ const q=document.getElementById("studentSearch").value.toLowerCase();
+ document.getElementById("studentRows").innerHTML=studentRows(db.students.filter(s=>(s.name+" "+s.email+" "+s.className).toLowerCase().includes(q)));
+}
+function resourcesPage(){
+ if(role==="Student"){
+  const student=getPreviewStudent();const classes=db.classes.filter(c=>c.name===student.className);const names=classes.map(c=>c.name);const items=db.resources.filter(r=>names.includes(r.course));
+  return `<div class="eyebrow">MY LEARNING MATERIALS</div><h1>My Resources</h1><p class="subtitle">Worksheets, notes, videos, and assignments shared by your teacher.</p><div class="student-resource-grid">${items.map(r=>`<article class="card student-resource-card"><div class="student-resource-icon">${r.type==="Video"?"▶️":r.type==="PDF"?"📄":r.type==="Audio"?"🎧":"📘"}</div><span class="pill">${safeText(r.category||"Resource")}</span><h3>${safeText(r.title)}</h3><p>${safeText(r.course)}</p><div class="student-resource-footer"><span>${safeText(r.type||"Learning material")}</span><button class="btn" onclick="alert('This demo shows resource details only. Actual file opening requires a resource file or URL to be attached.')">View resource →</button></div></article>`).join("")||'<div class="card empty">Your teacher has not shared resources with your classroom yet.</div>'}</div>`;
+ }
+ return `<div class="eyebrow">LEARNING MATERIALS</div><h1>Resource Library</h1><p class="subtitle">Organize lessons, worksheets, notes, and videos.</p>
+ <div class="toolbar"><input class="search" id="resourceSearch" placeholder="Search resources..." oninput="filterResources()">
+ <button class="btn primary" onclick="openCreate('resource')">＋ Add resource</button></div>
+ <div class="card table-wrap"><table><thead><tr><th>Resource</th><th>Category</th><th>Course</th><th>Type</th><th>Action</th></tr></thead><tbody id="resourceRows">${resourceRows(db.resources)}</tbody></table></div>
+ <div class="notice">Each selected resource is limited to 100 MB in this preview. File contents are not uploaded yet; connect private cloud storage for reliable uploads without slowing the website.</div>`;
+}
+function resourceRows(items){
+ return items.map(r=>`<tr><td><strong>${safeText(r.title)}</strong></td><td>${safeText(r.category)}</td><td>${safeText(r.course)}</td><td><span class="pill">${safeText(r.type)}</span></td><td><button class="btn" onclick="deleteItem('resources',${r.id})">Delete</button></td></tr>`).join("")||'<tr><td colspan="5" class="empty">No resources yet.</td></tr>';
+}
+function filterResources(){
+ const q=document.getElementById("resourceSearch").value.toLowerCase();
+ document.getElementById("resourceRows").innerHTML=resourceRows(db.resources.filter(r=>(r.title+" "+r.category+" "+r.course).toLowerCase().includes(q)));
+}
+function examsPage(){
+ if(role==="Student") return studentExamsPage();
+ if(currentExamId!==null){const selected=db.exams.find(e=>Number(e.id)===Number(currentExamId));if(selected)return examDetailPage(selected);currentExamId=null;}
+ const published=db.exams.filter(e=>e.status==="Published").length;
+ const drafts=db.exams.filter(e=>e.status!=="Published").length;
+ const average=db.results.length?Math.round(db.results.reduce((n,r)=>n+(Number(r.score||0)/Math.max(1,Number(r.maxScore||1)))*100,0)/db.results.length):0;
+ const examRows=db.exams.map(e=>`<tr><td><div class="exam-name-cell"><span class="exam-row-icon">📝</span><div><strong><button class="exam-title-link" type="button" onclick="openExam(${e.id})">${safeText(e.title)} <span aria-hidden="true">↗</span></button></strong><small>${safeText(e.type||"Assessment")}${e.date?" · "+safeText(e.date):""}</small></div></div></td><td>${safeText(e.course||"—")}</td><td><strong>${safeText(e.maxScore)}</strong></td><td><span class="pill ${e.status==="Published"?"green":"gray"}">${safeText(e.status||"Draft")}</span></td><td><button class="btn" onclick="deleteItem('exams',${e.id})">Delete</button></td></tr>`).join("")||'<tr><td colspan="5" class="empty">No exams yet. Create your first assessment to get started.</td></tr>';
+ const resultRows=db.results.map(r=>`<tr><td><strong>${safeText(r.student)}</strong></td><td>${safeText(r.exam)}</td><td><strong>${r.score}/${r.maxScore}</strong></td><td><div class="result-percent"><div class="progress"><span style="width:${Math.max(0,Math.min(100,Number(r.score||0)/Math.max(1,Number(r.maxScore||1))*100))}%"></span></div><strong>${Math.round(Number(r.score||0)/Math.max(1,Number(r.maxScore||1))*100)}%</strong></div></td></tr>`).join("")||'<tr><td colspan="4" class="empty">Recorded student scores will appear here.</td></tr>';
+ return `<div class="eyebrow">ASSESSMENT CENTRE</div><div class="exam-page-heading"><div><h1>Exams & Results</h1><p class="subtitle">Create assessments, manage exam records, and track student achievement.</p></div><button class="btn primary exam-main-action" onclick="openCreate('exam')">＋ Create exam</button></div>
+ <div class="exam-summary-grid">
+ <div class="card exam-summary-card"><div class="exam-summary-top"><span class="exam-summary-icon">📝</span><span class="exam-summary-caption">ALL ASSESSMENTS</span></div><strong class="exam-summary-value">${db.exams.length}</strong><span class="exam-summary-note">Exams and tests created</span></div>
+ <div class="card exam-summary-card"><div class="exam-summary-top"><span class="exam-summary-icon green-icon">✓</span><span class="exam-summary-caption">PUBLISHED</span></div><strong class="exam-summary-value">${published}</strong><span class="exam-summary-note">Available to students</span></div>
+ <div class="card exam-summary-card"><div class="exam-summary-top"><span class="exam-summary-icon amber-icon">◷</span><span class="exam-summary-caption">DRAFTS</span></div><strong class="exam-summary-value">${drafts}</strong><span class="exam-summary-note">Still being prepared</span></div>
+ <div class="card exam-summary-card"><div class="exam-summary-top"><span class="exam-summary-icon violet-icon">📊</span><span class="exam-summary-caption">AVERAGE SCORE</span></div><strong class="exam-summary-value">${db.results.length?average+"%":"—"}</strong><span class="exam-summary-note">From ${db.results.length} recorded result${db.results.length===1?"":"s"}</span></div>
+ </div>
+ <div class="card exam-panel"><div class="section-head"><div><h2>Exams</h2><p class="exam-panel-subtitle">Manage assessment details and publication status.</p></div><button class="btn primary" onclick="openCreate('exam')">＋ Create exam</button></div><div class="table-wrap"><table><thead><tr><th>Exam</th><th>Course</th><th>Max score</th><th>Status</th><th>Action</th></tr></thead><tbody>${examRows}</tbody></table></div></div>
+ <div class="card exam-panel exam-results-panel"><div class="section-head"><div><h2>Recorded results</h2><p class="exam-panel-subtitle">Review scores and percentages for each student.</p></div><button class="btn" onclick="openCreate('result')">＋ Add result</button></div><div class="table-wrap"><table><thead><tr><th>Student</th><th>Exam</th><th>Score</th><th>Percentage</th></tr></thead><tbody>${resultRows}</tbody></table></div></div>`;
+}
+
+function studentExamsPage(){
+ const student=getPreviewStudent();const names=db.classes.filter(c=>c.name===student.className).map(c=>c.name);
+ const exams=db.exams.filter(e=>names.includes(e.course)&&e.status==="Published");
+ return `<div class="eyebrow">MY ASSESSMENTS</div><h1>My Exams</h1><p class="subtitle">Find the exams your teacher has published for your classroom, and review your recorded results.</p><div class="student-exam-grid">${exams.map(e=>{const result=db.results.find(r=>r.student===student.name&&r.exam===e.title);return `<article class="card student-exam-card"><div class="student-resource-icon">📝</div><span class="pill ${result?"green":"orange"}">${result?"Result recorded":"Available"}</span><h2>${safeText(e.title)}</h2><p>${safeText(e.course)}</p><div class="student-exam-meta"><span>Maximum score <strong>${Number(e.maxScore||0)} points</strong></span><span>Duration <strong>${e.duration?Number(e.duration)+" min":"Not specified"}</strong></span></div>${result?`<div class="student-score-box"><span>Your result</span><strong>${result.score}/${result.maxScore} (${Math.round(Number(result.score||0)/Math.max(1,Number(result.maxScore||1))*100)}%)</strong></div>`:'<p class="student-assessment-note">Follow your teacher’s instructions for completing this assessment.</p>'}</article>`}).join("")||'<div class="card empty">There are no published exams assigned to your classroom yet.</div>'}</div>`;
+}
+function openExam(id){currentExamId=Number(id);render();window.scrollTo({top:0,behavior:"smooth"});}
+function backToExams(){currentExamId=null;render();}
+function examDetailPage(exam){
+ if(!Array.isArray(exam.questions))exam.questions=[];
+ const totalPoints=exam.questions.reduce((n,q)=>n+Number(q.points||0),0);
+ const questionRows=exam.questions.map((q,i)=>`<div class="question-card"><div class="question-number">Q${i+1}</div><div class="question-content"><div class="question-topline"><span class="pill">${safeText(q.type||"Multiple choice")}</span><span class="question-points">${Number(q.points||1)} point${Number(q.points||1)===1?"":"s"}</span></div><h3>${safeText(q.text)}</h3>${q.type==="Multiple choice"?`<div class="question-options">${(q.options||[]).filter(Boolean).map((o,j)=>`<div class="question-option ${o===q.correct?"correct-option":""}"><b>${String.fromCharCode(65+j)}.</b> ${safeText(o)} ${o===q.correct?'<span>✓ Correct answer</span>':''}</div>`).join("")}</div>`:q.type==="True / False"?`<p class="question-answer"><strong>Correct answer:</strong> ${safeText(q.correct||"Not set")}</p>`:`<p class="question-answer"><strong>Expected answer / marking guide:</strong> ${safeText(q.correct||"Add an answer guide")}</p>`}<div class="question-actions"><button class="btn" type="button" onclick="editExamQuestion(${exam.id},${q.id})">Edit question</button><button class="btn danger" type="button" onclick="deleteExamQuestion(${exam.id},${q.id})">Delete</button></div></div></div>`).join("")||'<div class="question-empty"><div class="question-empty-icon">✎</div><h3>No questions yet</h3><p>Start building this assessment below. Add questions, choose the correct answers, and assign points.</p></div>';
+ return `<div class="eyebrow">ASSESSMENT BUILDER</div><div class="exam-page-heading"><div><button class="text-back" onclick="backToExams()">← Back to Exams & Results</button><h1>${safeText(exam.title)}</h1><p class="subtitle">Build and organize the questions inside this exam.</p></div><span class="pill ${exam.status==="Published"?"green":"gray"}">${safeText(exam.status||"Draft")}</span></div>
+ <div class="exam-builder-summary"><div class="card builder-stat"><span class="builder-stat-icon">❓</span><div><small>QUESTIONS</small><strong>${exam.questions.length}</strong></div></div><div class="card builder-stat"><span class="builder-stat-icon">🎯</span><div><small>QUESTION POINTS</small><strong>${totalPoints}</strong></div></div><div class="card builder-stat"><span class="builder-stat-icon">🏫</span><div><small>CLASS / COURSE</small><strong>${safeText(exam.course||"Not assigned")}</strong></div></div><div class="card builder-stat"><span class="builder-stat-icon">⏱️</span><div><small>DURATION</small><strong>${exam.duration?safeText(exam.duration)+" min":"Not set"}</strong></div></div></div>
+ <div class="card exam-panel"><div class="section-head"><div><h2>Question list</h2><p class="exam-panel-subtitle">Questions appear in the order students will see them. You can edit or remove each one.</p></div><span class="pill">${exam.questions.length} total</span></div><div class="question-list">${questionRows}</div></div>
+ <div class="card exam-panel question-editor-panel"><div class="section-head"><div><h2 id="questionEditorTitle">＋ Add a question</h2><p class="exam-panel-subtitle">Choose a question format, enter the prompt, and set its score and answer key.</p></div></div><form id="examQuestionForm" onsubmit="saveExamQuestion(event,${exam.id})"><input type="hidden" name="questionId" id="questionId" value=""><div class="question-form-grid"><div class="form-field question-wide"><label for="questionText">Question prompt</label><textarea id="questionText" name="text" rows="3" required placeholder="e.g. Choose the correct meaning of ‘generous’. "></textarea></div><div class="form-field"><label for="questionType">Question type</label><select id="questionType" name="type" onchange="updateQuestionTypeFields()"><option>Multiple choice</option><option>True / False</option><option>Short answer</option><option>Open-ended</option></select></div><div class="form-field"><label for="questionPoints">Points</label><input id="questionPoints" name="points" type="number" min="1" value="1" required></div><div class="question-wide" id="questionOptionsFields"><div class="form-field"><label for="questionOptionA">Option A</label><input id="questionOptionA" name="optionA" placeholder="First answer choice"></div><div class="form-field"><label for="questionOptionB">Option B</label><input id="questionOptionB" name="optionB" placeholder="Second answer choice"></div><div class="form-field"><label for="questionOptionC">Option C</label><input id="questionOptionC" name="optionC" placeholder="Third answer choice"></div><div class="form-field"><label for="questionOptionD">Option D</label><input id="questionOptionD" name="optionD" placeholder="Fourth answer choice"></div></div><div class="form-field question-wide" id="questionCorrectWrap"><label for="questionCorrect">Correct answer</label><select id="questionCorrect" name="correct"><option value="">Choose the correct option</option><option value="__A">Option A</option><option value="__B">Option B</option><option value="__C">Option C</option><option value="__D">Option D</option></select></div><div class="form-field question-wide" id="questionAnswerGuideWrap" style="display:none"><label for="questionAnswerGuide">Expected answer / marking guide</label><textarea id="questionAnswerGuide" name="answerGuide" rows="2" placeholder="Write the answer or criteria used to mark responses"></textarea></div></div><div class="question-form-actions"><button class="btn" type="button" onclick="resetQuestionForm()">Clear form</button><button class="btn primary" type="submit" id="saveQuestionButton">＋ Save question</button></div></form></div>
+ <div class="exam-builder-footer"><p><strong>Exam total:</strong> ${totalPoints} points from questions so far${Number(exam.maxScore||0)>0?` · Maximum score set for exam: ${safeText(exam.maxScore)}`:""}. Adjust the exam's maximum score if needed.</p><button class="btn primary" onclick="toggleExamPublish(${exam.id})">${exam.status==="Published"?"Move back to draft":"Publish exam"}</button></div>`;
+}
+function updateQuestionTypeFields(){const type=document.getElementById("questionType")?.value;const options=document.getElementById("questionOptionsFields");const correct=document.getElementById("questionCorrectWrap");const guide=document.getElementById("questionAnswerGuideWrap");if(!options||!correct||!guide)return;options.style.display=type==="Multiple choice"?"grid":"none";correct.style.display=(type==="Multiple choice"||type==="True / False")?"block":"none";guide.style.display=(type==="Short answer"||type==="Open-ended")?"block":"none";const select=document.getElementById("questionCorrect");if(type==="True / False"){select.innerHTML='<option value="">Choose the correct answer</option><option value="True">True</option><option value="False">False</option>';}else if(type==="Multiple choice"&&!select.innerHTML.includes("__A")){select.innerHTML='<option value="">Choose the correct option</option><option value="__A">Option A</option><option value="__B">Option B</option><option value="__C">Option C</option><option value="__D">Option D</option>';}}
+function saveExamQuestion(event,examId){event.preventDefault();const exam=db.exams.find(e=>Number(e.id)===Number(examId));if(!exam)return;if(!Array.isArray(exam.questions))exam.questions=[];const f=event.target;const type=f.type.value;const options=[f.optionA.value.trim(),f.optionB.value.trim(),f.optionC.value.trim(),f.optionD.value.trim()];let correct=f.correct.value;if(type==="Multiple choice"){const map={__A:options[0],__B:options[1],__C:options[2],__D:options[3]};correct=map[correct]||"";if(options.filter(Boolean).length<2){alert("Please enter at least two answer options.");return;}if(!correct){alert("Please choose the correct answer.");return;}}if(type==="True / False"&&!correct){alert("Please choose True or False as the correct answer.");return;}if((type==="Short answer"||type==="Open-ended")&&!f.answerGuide.value.trim()){alert("Please add an expected answer or marking guide.");return;}const id=f.questionId.value?Number(f.questionId.value):Date.now();const q={id,text:f.text.value.trim(),type,points:Number(f.points.value||1),options:type==="Multiple choice"?options:[],correct:type==="Short answer"||type==="Open-ended"?f.answerGuide.value.trim():correct};const index=exam.questions.findIndex(x=>Number(x.id)===id);if(index>=0)exam.questions[index]=q;else exam.questions.push(q);const total=exam.questions.reduce((n,x)=>n+Number(x.points||0),0);if(total>Number(exam.maxScore||0)){if(!confirm(`Your questions add up to ${total} points, more than this exam's maximum score (${exam.maxScore}). Save anyway?`)){exam.questions=exam.questions.filter(x=>Number(x.id)!==id);saveData();render();return;}}recordActivity(index>=0?"Exam question updated":"Exam question added",exam.title+" · "+q.text);saveData();render();}
+function editExamQuestion(examId,questionId){const exam=db.exams.find(e=>Number(e.id)===Number(examId));const q=exam?.questions?.find(x=>Number(x.id)===Number(questionId));if(!q)return;const f=document.getElementById("examQuestionForm");f.questionId.value=q.id;f.text.value=q.text;f.type.value=q.type;f.points.value=q.points||1;updateQuestionTypeFields();if(q.type==="Multiple choice"){["optionA","optionB","optionC","optionD"].forEach((n,i)=>f[n].value=(q.options||[])[i]||"");const idx=(q.options||[]).indexOf(q.correct);f.correct.value=idx>=0?["__A","__B","__C","__D"][idx]:"";}else if(q.type==="True / False"){f.correct.value=q.correct;}else f.answerGuide.value=q.correct||"";document.getElementById("questionEditorTitle").textContent="Edit question";document.getElementById("saveQuestionButton").textContent="Save changes";f.scrollIntoView({behavior:"smooth",block:"center"});}
+function resetQuestionForm(){const f=document.getElementById("examQuestionForm");if(!f)return;f.reset();f.questionId.value="";f.points.value=1;document.getElementById("questionEditorTitle").textContent="＋ Add a question";document.getElementById("saveQuestionButton").textContent="＋ Save question";updateQuestionTypeFields();}
+function deleteExamQuestion(examId,questionId){const exam=db.exams.find(e=>Number(e.id)===Number(examId));if(!exam||!confirm("Delete this question from the exam?"))return;exam.questions=(exam.questions||[]).filter(q=>Number(q.id)!==Number(questionId));saveData();render();}
+function toggleExamPublish(examId){const exam=db.exams.find(e=>Number(e.id)===Number(examId));if(!exam)return;exam.status=exam.status==="Published"?"Draft":"Published";saveData();render();}
+
+function progressPage(){
+ if(role==="Student"){
+  const student=getPreviewStudent();const results=db.results.filter(r=>r.student===student.name);const average=results.length?Math.round(results.reduce((n,r)=>n+Number(r.score||0)/Math.max(1,Number(r.maxScore||1))*100,0)/results.length):null;
+  return `<div class="eyebrow">MY LEARNING PROGRESS</div><h1>My Results & Progress</h1><p class="subtitle">Only your own recorded scores are shown here.</p><div class="student-learning-stats"><div class="card"><small>RECORDED RESULTS</small><strong>${results.length}</strong></div><div class="card"><small>AVERAGE SCORE</small><strong>${average===null?"—":average+"%"}</strong></div><div class="card"><small>CLASSROOM</small><strong>${safeText(student.className||"Not assigned")}</strong></div></div><div class="card student-content-card"><h2>My results</h2>${results.map(r=>{const pct=Math.round(Number(r.score||0)/Math.max(1,Number(r.maxScore||1))*100);return `<div class="student-item-row"><div><strong>${safeText(r.exam)}</strong><small>${safeText(r.score)}/${safeText(r.maxScore)} points</small><div class="progress"><span style="width:${pct}%"></span></div></div><strong>${pct}%</strong></div>`}).join("")||'<div class="student-empty-inline">Your teacher has not recorded results yet.</div>'}</div>`;
+ }
+ return `<div class="eyebrow">LEARNING ANALYTICS</div><h1>Progress overview</h1><p class="subtitle">A summary of the assessment data saved in this browser.</p>
+ <div class="grid">${metric("Recorded results",db.results.length,"✓","Demo records")}
+ ${metric("Average score",db.results.length?Math.round(db.results.reduce((n,r)=>n+r.score/r.maxScore*100,0)/db.results.length)+"%":"—","↗","Based on recorded scores")}
+ ${metric("Classrooms",db.classes.length,"🏫","Learning groups")}
+ ${metric("Resources",db.resources.length,"▤","Resource records")}</div>
+ <div class="card">${section("Assessment history")}
+ <div class="table-wrap"><table><thead><tr><th>Student</th><th>Assessment</th><th>Score</th><th>Progress</th></tr></thead><tbody>
+ ${db.results.map(r=>`<tr><td>${safeText(r.student)}</td><td>${safeText(r.exam)}</td><td>${r.score}/${r.maxScore}</td><td><div class="progress" style="width:130px"><span style="width:${Math.max(0,Math.min(100,r.score/r.maxScore*100))}%"></span></div></td></tr>`).join("")||'<tr><td colspan="4" class="empty">Results will appear here when recorded.</td></tr>'}
+ </tbody></table></div></div>`;
+}
+function getSetting(key,fallback){
+ try { const v=localStorage.getItem("fluentlab_setting_"+key); return v===null?fallback:v; } catch(e){ return fallback; }
+}
+function setSetting(key,value){
+ try { localStorage.setItem("fluentlab_setting_"+key,String(value)); } catch(e){}
+}
+function applyTheme(theme){
+ const chosen=theme||getSetting("theme","light");
+ document.body.setAttribute("data-theme",chosen);
+ setSetting("theme",chosen);
+}
+function settingsPage(){
+ const theme=getSetting("theme","light");
+ const language=getSetting("language","en");
+ const displayName=getSetting("displayName",`FLUENT LAB ${role}`);
+ const email=getSetting("email","");
+ const announcements=getSetting("announcements","on");
+ const reminders=getSetting("reminders","on");
+ return `<div class="eyebrow">PERSONALIZE YOUR WORKSPACE</div><h1>Settings</h1><p class="subtitle">Manage your preferences and this browser's demo workspace. Changes here are saved on this device only.</p>
+ <div class="settings-grid">
+  <div class="card">${section("Appearance")}
+   <div class="setting-row"><div><h3>Theme</h3><p>Choose a comfortable light or dark workspace.</p></div><select class="setting-control" aria-label="Theme" onchange="applyTheme(this.value);render()"><option value="light" ${theme==="light"?"selected":""}>☀️ Light mode</option><option value="dark" ${theme==="dark"?"selected":""}>🌙 Dark mode</option></select></div>
+   <div class="setting-row"><div><h3>Language preference</h3><p>Choose your preferred language. Full interface translation can be added in a later step.</p></div><select class="setting-control" aria-label="Language preference" onchange="setSetting('language',this.value);render()"><option value="en" ${language==="en"?"selected":""}>English</option><option value="az" ${language==="az"?"selected":""}>Azərbaycan dili</option><option value="tr" ${language==="tr"?"selected":""}>Türkçe</option><option value="ru" ${language==="ru"?"selected":""}>Русский</option></select></div>
+  </div>
+  <div class="card">${section("Profile preferences")}
+   <div class="form-field"><label for="settingsName">Display name</label><input id="settingsName" value="${safeText(displayName)}" placeholder="Your display name"></div>
+   <div class="form-field"><label for="settingsEmail">Contact email (optional)</label><input id="settingsEmail" type="email" value="${safeText(email)}" placeholder="you@example.com"></div>
+   <button class="btn primary" onclick="saveProfileSettings()">Save profile preferences</button>
+  </div>
+  <div class="card">${section("Notifications")}
+   <div class="setting-row"><div><h3>Announcements</h3><p>Preference for classroom and platform announcements.</p></div><select class="setting-control" aria-label="Announcements" onchange="setSetting('announcements',this.value)"><option value="on" ${announcements==="on"?"selected":""}>Enabled</option><option value="off" ${announcements==="off"?"selected":""}>Disabled</option></select></div>
+   <div class="setting-row"><div><h3>Study reminders</h3><p>Preference for homework and exam reminders.</p></div><select class="setting-control" aria-label="Study reminders" onchange="setSetting('reminders',this.value)"><option value="on" ${reminders==="on"?"selected":""}>Enabled</option><option value="off" ${reminders==="off"?"selected":""}>Disabled</option></select></div>
+   <p class="subtitle">These are saved preferences only; email or push notifications are not connected yet.</p>
+  </div>
+  <div class="card">${section("Privacy & data")}
+   <p class="subtitle">This prototype stores demo records in this browser. Export a backup before clearing them.</p>
+   <div class="toolbar"><button class="btn" onclick="exportDemoData()">Export demo data</button><button class="btn" onclick="resetDemo()">Reset demo data</button></div>
+  </div>
+ </div>
+ <div class="card danger-card">${section("Account")}
+  <div class="setting-row"><div><h3>Log out / switch account</h3><p>This preview has no real user authentication yet. Exit preview mode by returning to the dashboard and resetting the selected role.</p></div><button class="btn" onclick="logoutPreview()">Exit preview</button></div>
+  <div class="setting-row"><div><h3>Password and sign-in security</h3><p>Password changes, Google sign-in, password recovery, and active-session management require Supabase authentication to be connected.</p></div><span class="pill orange">Not connected</span></div>
+ </div>
+ <div class="notice"><strong>Important:</strong> Settings currently save to this browser only. They do not update a Supabase user profile or sync to other devices. Account approval, roles, two-factor authentication, audit logs, and real notifications should be configured as part of the secure production setup.</div>`;
+}
+function saveProfileSettings(){
+ const name=document.getElementById("settingsName").value.trim();
+ const email=document.getElementById("settingsEmail").value.trim();
+ if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){alert("Please enter a valid email address.");return;}
+ setSetting("displayName",name||"FLUENT LAB Owner");setSetting("email",email);alert("Preferences saved on this device.");render();
+}
+function exportDemoData(){
+ const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),data:db},null,2)],{type:"application/json"});
+ const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="fluentlab-demo-backup.json";a.click();URL.revokeObjectURL(url);
+}
+function logoutPreview(){
+ if(!confirm("Exit the current preview role and return to the Owner dashboard? This does not sign out of a real account."))return;
+ role="Owner";currentPage="Dashboard";render();
+}
+
+
+function messageContactsForRole(){
+ const unique=(items)=>items.filter((x,i,a)=>x&&a.findIndex(y=>y.name===x.name&&y.type===x.type)===i);
+ const teachers=unique(db.classes.map(c=>({name:c.teacher,type:'Teacher',className:c.name})).filter(x=>x.name));
+ const students=unique(db.students.map(st=>({name:st.name,type:'Student',className:st.className})).filter(x=>x.name));
+ const parents=students.map(st=>({name:'Parent of '+st.name,type:'Parent',className:st.className,studentName:st.name}));
+ const owner={name:'FLUENT LAB Owner',type:'Owner'};
+ if(role==='Owner') return unique([...teachers,...students,...parents]);
+ if(role==='Teacher'){
+   const myClasses=db.classes.filter(c=>c.teacher==='Govhar Yaqubova'||c.teacher==='Ms. Govhar Yaqubova').map(c=>c.name);
+   const myStudents=students.filter(st=>myClasses.includes(st.className));
+   const myParents=parents.filter(pa=>myClasses.includes(pa.className));
+   return unique([...myStudents,...myParents]);
+ }
+ if(role==='Student'){
+   // Demo student identity: Aylin M. Change this mapping when real accounts are connected.
+   const me=db.students.find(st=>st.name==='Aylin M.')||db.students[0];
+   if(!me)return teachers;
+   const classmates=students.filter(st=>st.className===me.className&&st.name!==me.name);
+   const myTeachers=teachers.filter(t=>t.className===me.className);
+   return unique([...classmates,...myTeachers]);
+ }
+ if(role==='Parent'){
+   // Demo parent identity: parent of Aylin M. Change this mapping when real accounts are connected.
+   const child=db.students.find(st=>st.name==='Aylin M.')||db.students[0];
+   const childTeachers=child?teachers.filter(t=>t.className===child.className):[];
+   return unique([owner,...childTeachers]);
+ }
+ return [];
+}
+function messagesPage(){
+ const roleContacts = role === 'Parent' ? 'the owner or your child\'s teachers' : role === 'Student' ? 'your classmates or teachers' : role === 'Teacher' ? 'your students or their parents' : 'anyone in FLUENT LAB';
+ const pageHeading = role === 'Parent' ? 'Messages with Owner & Teachers' : role === 'Student' ? 'Messages with Classmates & Teachers' : role === 'Teacher' ? 'Messages with Your Students & Parents' : 'Messages Center';
+ const allowed=messageContactsForRole();
+ const allowedNames=new Set(allowed.map(x=>x.name));
+ const visibleConversations=parentConversations.filter(c=>allowedNames.has(c.teacher));
+ const active=visibleConversations.find(c=>c.id===activeConversationId)||visibleConversations[0];
+ const list=visibleConversations.map(c=>`<div class="conversation-item ${active&&c.id===active.id?'active':''}" onclick="openConversation(${c.id})"><div class="conversation-avatar">${safeText(c.teacher.split(' ').slice(-1)[0][0]||'T')}</div><div class="conversation-info"><strong>${safeText(c.teacher)}</strong><small>${safeText(c.preview||c.subject||'Start a conversation')}</small></div></div>`).join('');
+ const msgs=active?active.messages.map(m=>`<div class="message-bubble ${m.from===role.toLowerCase()?'mine':''}">${safeText(m.text||'')}${m.file?renderMessageAttachment(m.file):''}${m.audio?`<div class="message-attachment"><div class="attachment-filecard"><span class="attachment-fileicon">🎙️</span><div class="attachment-fileinfo"><strong>Voice message</strong><small>Audio recording</small></div></div><audio controls src="${m.audio}" style="display:block;max-width:100%;margin:8px"></audio></div>`:''}<small>${safeText(m.time||'Just now')}</small></div>`).join(''):'';
+ return `<div class="eyebrow">${safeText(role.toUpperCase())} PORTAL</div><div class="section-head"><div><h1>${pageHeading}</h1><p class="subtitle">You can message ${roleContacts} only.</p></div><button class="btn primary" onclick="openNewChat()"><span style="font-size:18px;vertical-align:-2px">＋</span> New message</button></div>
+ <div class="messages-layout"><div class="card conversation-list"><div class="conversation-list-head"><h2>Your conversations</h2><button class="icon-btn" title="Start a new chat" aria-label="Start a new chat" onclick="openNewChat()">＋</button></div>${list||'<div class="empty">No permitted conversations yet. Click + to choose someone you can contact.</div>'}</div>
+ <div class="card chat-panel">${active?`<div class="chat-head"><div class="conversation-avatar">${safeText(active.teacher.split(' ').slice(-1)[0][0]||'T')}</div><div><h2>${safeText(active.teacher)}</h2><p>${safeText(active.subject||'Contact')}</p></div></div>`:'<div class="chat-head"><h2>Select a conversation</h2></div>'}<div class="chat-feed" id="chatFeed">${active?(msgs||'<div class="chat-empty">Say hello to begin the conversation.</div>'):'<div class="chat-empty">Choose an allowed contact using New message.</div>'}</div>
+ <div class="composer"><div class="composer-tools"><button class="tool-btn" type="button" onclick="document.getElementById('messageFiles').click()">＋ Attach files</button><input id="messageFiles" type="file" accept="image/*,video/*,audio/*,.pdf,.ppt,.pptx,.odp,.doc,.docx" multiple hidden onchange="selectMessageFiles(this.files)"><button class="tool-btn" type="button" onclick="toggleVoiceRecording()">🎙 <span id="voiceButtonLabel">Record voice</span></button><span id="recordingStatus" class="file-chip"></span></div><div id="selectedFiles" class="file-chip">${pendingMessageFiles.length?'Preview before sending:':'Attach pictures, PDFs, slides, videos, or audio files.'}</div><div id="selectedFilePreviews" class="selected-file-previews">${pendingMessageFiles.map(renderSelectedFilePreview).join('')}</div><div class="composer-row"><textarea id="messageText" placeholder="Write a message…" aria-label="Message text" ${active?'':'disabled'}></textarea><button class="btn primary" onclick="sendParentMessage()" ${active?'':'disabled'}>Send ↗</button></div><p class="message-note">Preview mode: messages are local demo data. Role restrictions here are for the preview; production access must also be enforced by Supabase policies.</p></div></div></div>`;
+}
+function openConversation(id){
+ const c=parentConversations.find(x=>x.id===id);
+ if(!c||!messageContactsForRole().some(x=>x.name===c.teacher)){alert('You cannot access this conversation from the current role.');return;}
+ activeConversationId=id;pendingMessageFiles=[];render();
+}
+function openNewChat(){
+ const contacts=messageContactsForRole();
+ document.getElementById('modalTitle').textContent='Start a conversation';
+ document.getElementById('modalFields').innerHTML=`<p class="subtitle">Your role can contact only the people listed here. This preview creates a local demo conversation only.</p><div class="teacher-choice">${contacts.map(t=>`<button type="button" onclick="startParentConversation('${safeText(t.name).replace(/'/g,'&#39;')}')"><div class="conversation-avatar">${safeText(t.name.split(' ').slice(-1)[0][0]||'T')}</div><div><strong>${safeText(t.name)}</strong><div class="subtitle">${safeText(t.type)}${t.className?' · '+safeText(t.className):''}</div></div><span style="margin-left:auto">›</span></button>`).join('')||'<p class="empty">No eligible contacts are configured for this demo role.</p>'}</div>`;
+ document.querySelector('#modalForm .form-actions').innerHTML='<button class="btn" type="button" onclick="closeModal()">Close</button>';
+ document.getElementById('modalBg').style.display='flex';
+}
+function startParentConversation(contactName){
+ const contact=messageContactsForRole().find(x=>x.name===contactName);
+ if(!contact){alert('This contact is not available to your current role.');closeModal();return;}
+ let c=parentConversations.find(x=>x.teacher===contact.name);
+ if(!c){c={id:Date.now(),teacher:contact.name,subject:contact.type+(contact.className?' · '+contact.className:''),contactType:contact.type,preview:'Conversation started',messages:[]};parentConversations.unshift(c)}
+ activeConversationId=c.id;pendingMessageFiles=[];closeModal();document.querySelector('#modalForm .form-actions').innerHTML='<button class="btn" type="button" onclick="closeModal()">Cancel</button><button class="btn primary" type="submit">Save</button>';render();
+}
+function attachmentKind(file){
+ const type=file.type||'';const name=file.name||'';
+ if(type.startsWith('image/'))return 'image';if(type.startsWith('video/'))return 'video';if(type.startsWith('audio/'))return 'audio';
+ if(type==='application/pdf'||/\.pdf$/i.test(name))return 'pdf';
+ if(/\.(ppt|pptx|odp)$/i.test(name)||type.includes('presentation'))return 'slides';
+ if(/\.(doc|docx)$/i.test(name)||type.includes('wordprocessing')||type==='application/msword')return 'document';
+ return 'file';
+}
+function attachmentIcon(kind){return ({pdf:'📕',slides:'📊',document:'📄',audio:'🎵',video:'🎬',image:'🖼️',file:'📎'})[kind]||'📎';}
+function formatFileSize(bytes){if(bytes<1024)return bytes+' B';if(bytes<1024*1024)return (bytes/1024).toFixed(0)+' KB';return (bytes/(1024*1024)).toFixed(1)+' MB';}
+function renderSelectedFilePreview(file){
+ const kind=attachmentKind(file),url=file.previewUrl||'';const name=safeText(file.name||'Attachment');
+ let visual=kind==='image'&&url?`<img src="${url}" alt="Image preview">`:kind==='video'&&url?`<video src="${url}" muted></video>`:`<div class="preview-icon">${attachmentIcon(kind)}</div>`;
+ return `<div class="selected-file-preview">${visual}<span>${name}</span></div>`;
+}
+function renderMessageAttachment(file){
+ const kind=file.kind||attachmentKind(file),url=file.url||'';const name=safeText(file.name||'Attachment');const size=formatFileSize(file.size||0);
+ if(kind==='image'&&url)return `<div class="message-attachment"><a href="${url}" target="_blank" rel="noopener" aria-label="Open image"><img src="${url}" alt="Image attachment"></a><div class="attachment-actions"><a href="${url}" target="_blank" rel="noopener">Open picture</a><a href="${url}" download="${name}">Save picture</a></div></div>`;
+ if(kind==='video'&&url)return `<div class="message-attachment"><video controls preload="metadata" src="${url}"></video><div class="attachment-actions"><a href="${url}" download="${name}">Save video</a></div></div>`;
+ if(kind==='audio'&&url)return `<div class="message-attachment"><div class="attachment-filecard"><span class="attachment-fileicon">🎵</span><div class="attachment-fileinfo"><strong>${name}</strong><small>${size} · Audio</small></div></div><audio controls preload="metadata" src="${url}" style="display:block;max-width:100%;margin:8px"></audio><div class="attachment-actions"><a href="${url}" download="${name}">Save audio</a></div></div>`;
+ if(kind==='pdf'&&url)return `<div class="message-attachment"><div class="attachment-filecard"><span class="attachment-fileicon">📕</span><div class="attachment-fileinfo"><strong>${name}</strong><small>${size} · PDF document</small></div></div><iframe title="PDF preview" src="${url}#toolbar=1&navpanes=0"></iframe><div class="attachment-actions"><a href="${url}" target="_blank" rel="noopener">Open PDF</a><a href="${url}" download="${name}">Save PDF</a></div></div>`;
+ const label=kind==='slides'?'Presentation':kind==='document'?'Document':'File';
+ return `<div class="message-attachment"><div class="attachment-filecard"><span class="attachment-fileicon">${attachmentIcon(kind)}</span><div class="attachment-fileinfo"><strong>${name}</strong><small>${size} · ${label}</small></div></div>${url?`<div class="attachment-actions"><a href="${url}" target="_blank" rel="noopener">Open file</a><a href="${url}" download="${name}">Download file</a></div>`:''}</div>`;
+}
+function selectMessageFiles(files){
+ const allowedTypes=f=>f.type.startsWith('image/')||f.type.startsWith('video/')||f.type.startsWith('audio/')||['application/pdf','application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.presentationml.presentation','application/vnd.oasis.opendocument.presentation','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'].includes(f.type)||/\.(pdf|ppt|pptx|odp|doc|docx)$/i.test(f.name);
+ const chosen=Array.from(files||[]);const invalid=chosen.find(f=>!allowedTypes(f));const tooLarge=chosen.find(f=>f.size>MAX_UPLOAD_BYTES);
+ if(invalid){alert('Please attach pictures, videos, PDFs, slides, documents, or audio files.');pendingMessageFiles=[];}
+ else if(tooLarge){alert(tooLarge.name+' is larger than 100 MB. Please compress it or choose a smaller file.');pendingMessageFiles=[];}
+ else {pendingMessageFiles=chosen.map(file=>Object.assign(file,{previewUrl:URL.createObjectURL(file)}));}
+ const el=document.getElementById('selectedFiles');if(el)el.textContent=pendingMessageFiles.length?'Preview before sending:':'Attach pictures, PDFs, slides, videos, or audio files (max 100 MB each).';
+ const previews=document.getElementById('selectedFilePreviews');if(previews)previews.innerHTML=pendingMessageFiles.map(renderSelectedFilePreview).join('');
+}
+function sendParentMessage(audioUrl=null){
+ const c=parentConversations.find(x=>x.id===activeConversationId);if(!c||!messageContactsForRole().some(x=>x.name===c.teacher)){alert('Please choose an allowed contact first.');return;}
+ const input=document.getElementById('messageText');const text=input?input.value.trim():'';
+ if(!text&&!pendingMessageFiles.length&&!audioUrl){alert('Write a message, attach a file, or record a voice message first.');return;}
+ const files=pendingMessageFiles.splice(0);
+ const time=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+ if(text||audioUrl)c.messages.push({from:role.toLowerCase(),text:text||(audioUrl?'Voice message':''),file:null,audio:audioUrl,time});
+ files.forEach(file=>c.messages.push({from:role.toLowerCase(),text:'',file:{name:file.name,size:file.size,type:file.type,kind:attachmentKind(file),url:file.previewUrl},audio:null,time}));
+ c.preview=text||(files.length?'📎 '+files.length+' attachment'+(files.length===1?'':'s'):'🎙 Voice message');
+ if(input)input.value='';pendingMessageFiles=[];render();
+}
+async function toggleVoiceRecording(){
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){alert('Voice recording is not supported in this browser. Try a recent version of Chrome or Edge and allow microphone access.');return;}
+ if(voiceRecording&&mediaRecorder){mediaRecorder.stop();return;}
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});audioChunks=[];mediaRecorder=new MediaRecorder(stream);
+  mediaRecorder.ondataavailable=e=>{if(e.data.size)audioChunks.push(e.data)};
+  mediaRecorder.onstop=()=>{const blob=new Blob(audioChunks,{type:mediaRecorder.mimeType||'audio/webm'});const url=URL.createObjectURL(blob);stream.getTracks().forEach(t=>t.stop());voiceRecording=false;const c=parentConversations.find(x=>x.id===activeConversationId);if(c){c.messages.push({from:role.toLowerCase(),text:'Voice message',audio:url,time:new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});c.preview='🎙 Voice message';}render();};
+  mediaRecorder.start();voiceRecording=true;const status=document.getElementById('recordingStatus');const label=document.getElementById('voiceButtonLabel');if(status)status.textContent='Recording… click Stop recording when finished';if(label)label.textContent='Stop recording';
+ }catch(e){alert('Microphone access was not granted. Please allow microphone access and try again.');voiceRecording=false;}
+}
+
+function render(){
+ updateNavigation();
+ document.getElementById("roleSelect").value=role;
+ document.getElementById("pageTitle").textContent=currentPage;
+ document.getElementById("dateLabel").textContent=new Date().toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric",year:"numeric"});
+ const app=document.getElementById("app");
+ if(currentPage==="Dashboard"){
+  app.innerHTML=dashboard();
+  const brand=app.querySelector(".home-brand-banner");
+  const announcements=app.querySelector(".announcement-panel");
+  if(brand&&announcements) app.insertBefore(brand,announcements);
+ }
+ else if(currentPage==="Classrooms"||currentPage==="My Classes") app.innerHTML=classroomsPage();
+ else if(currentPage==="Students") app.innerHTML=studentsPage();
+ else if(currentPage==="Resources") app.innerHTML=resourcesPage();
+ else if(currentPage==="Exams & Results"||currentPage==="My Exams") app.innerHTML=examsPage();
+ else if(currentPage==="Progress"||currentPage==="My Progress"||currentPage==="Results & Progress") app.innerHTML=progressPage();
+ else if(currentPage==="Settings") app.innerHTML=settingsPage();
+ else if(currentPage==="Messages") app.innerHTML=messagesPage();
+ else if(currentPage==="My Children") app.innerHTML=`<div class="eyebrow">PARENT PORTAL</div><h1>My Children</h1><p class="subtitle">View linked children's classroom information and learning progress.</p><div class="card"><div class="empty">Child profiles will appear here after secure parent-child accounts are connected.</div></div>`;
+ else app.innerHTML=dashboard();
+}
+function openCreate(type){
+ const teacherEntryTypes=["class","resource","exam","result"];
+ if(teacherEntryTypes.includes(type)&&role!=="Teacher"&&role!=="Owner"){
+  alert("Only an Owner/Admin or Teacher can create or fill in this information.");return;
+ }
+ if(type==="student"&&role!=="Owner"){
+  alert("Only the Admin/Owner can add or approve student accounts in this preview.");return;
+ }
+ const configs={
+  class:{title:"Create classroom",collection:"classes",fields:[
+   ["name","Classroom name","text",true],["subject","Subject / course focus","select",true,["English","General English","Primary English","Grammar","Reading","Speaking","IELTS Preparation","Exam Preparation","Other"]],["level","Level / grade","select",true,["Pre-A1","A1","A2","B1","B2","C1","Primary","Grade 1","Grade 2","Grade 3","Exam Preparation"]],["teacher","Assigned teacher","text",true],["students","Current number of students","number",true],["capacity","Maximum class capacity","number",false],["schedule","Schedule (days and time)","text",false],["startDate","Start date","date",false],["endDate","End date","date",false],["location","Room / online meeting link","text",false],["status","Classroom status","select",true,["Active","Upcoming","Paused","Archived"]],["description","Class description","textarea",false],["goals","Learning goals / notes","textarea",false]]},
