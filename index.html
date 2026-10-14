@@ -321,7 +321,40 @@ body[data-theme="dark"] .home-brand-copy strong{color:#edf2ff;}
 @media(max-width:700px){.announcement-item-head{flex-direction:column;gap:3px}.announcement-panel-head h2{font-size:18px}.announcement-toolbar{align-items:flex-start;flex-wrap:wrap}}
 
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+/* FLUENT LAB email/password sign-in and session restore */
+document.getElementById('authForm')?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const email = document.getElementById('authEmail')?.value.trim();
+  const password = document.getElementById('authPassword')?.value;
+  const submit = document.getElementById('authSubmit');
+  if (!email || !password) {
+    authFeedback('Enter your email address and password.', true);
+    return;
+  }
+  const oldText = submit?.textContent || 'Log in';
+  if (submit) { submit.disabled = true; submit.textContent = 'Signing in…'; }
+  try {
+    const { error } = await fluentSupabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    await finishSupabaseLogin();
+  } catch (error) {
+    authFeedback(error.message || 'Sign-in failed. Please try again.', true);
+  } finally {
+    if (submit) { submit.disabled = false; submit.textContent = oldText; }
+  }
+});
+(async function restoreExistingSession() {
+  try {
+    const { data, error } = await fluentSupabase.auth.getSession();
+    if (error) throw error;
+    if (data?.session) await finishSupabaseLogin();
+  } catch (error) {
+    authFeedback(error.message || 'Could not restore your sign-in session.', true);
+  }
+})();
+
+</script>
 </head>
 <body>
 <div class="auth-gate" id="authGate">
