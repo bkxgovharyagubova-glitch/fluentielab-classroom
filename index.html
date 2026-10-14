@@ -1040,7 +1040,7 @@ function render(){
   if(brand&&announcements) app.insertBefore(brand,announcements);
  }
  else if(currentPage==="Classrooms"||currentPage==="My Classes") app.innerHTML=classroomsPage();
- else if(currentPage==="Students") app.innerHTML=studentsPage();
+ else if(currentPage==="Students") { app.innerHTML=studentsPage(); if(!isDemoPreview && authenticatedProfile && ['owner','teacher'].includes(authenticatedProfile.role)) loadStudentsForLinkingCodes(); }
  else if(currentPage==="Resources") app.innerHTML=resourcesPage();
  else if(currentPage==="Exams & Results"||currentPage==="My Exams") app.innerHTML=examsPage();
  else if(currentPage==="Progress"||currentPage==="My Progress"||currentPage==="Results & Progress") app.innerHTML=progressPage();
