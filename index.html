@@ -321,46 +321,13 @@ body[data-theme="dark"] .home-brand-copy strong{color:#edf2ff;}
 @media(max-width:700px){.announcement-item-head{flex-direction:column;gap:3px}.announcement-panel-head h2{font-size:18px}.announcement-toolbar{align-items:flex-start;flex-wrap:wrap}}
 
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-/* FLUENT LAB email/password sign-in and session restore */
-document.getElementById('authForm')?.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const email = document.getElementById('authEmail')?.value.trim();
-  const password = document.getElementById('authPassword')?.value;
-  const submit = document.getElementById('authSubmit');
-  if (!email || !password) {
-    authFeedback('Enter your email address and password.', true);
-    return;
-  }
-  const oldText = submit?.textContent || 'Log in';
-  if (submit) { submit.disabled = true; submit.textContent = 'Signing in…'; }
-  try {
-    const { error } = await fluentSupabase.auth.signInWithPassword({ email, password });
-    if (error) throw error;
-    await finishSupabaseLogin();
-  } catch (error) {
-    authFeedback(error.message || 'Sign-in failed. Please try again.', true);
-  } finally {
-    if (submit) { submit.disabled = false; submit.textContent = oldText; }
-  }
-});
-(async function restoreExistingSession() {
-  try {
-    const { data, error } = await fluentSupabase.auth.getSession();
-    if (error) throw error;
-    if (data?.session) await finishSupabaseLogin();
-  } catch (error) {
-    authFeedback(error.message || 'Could not restore your sign-in session.', true);
-  }
-})();
-
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <div class="auth-gate" id="authGate">
  <div class="auth-shell">
   <section class="auth-welcome">
-   <div><div class="auth-brand"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22128%22%20height%3D%22128%22%20viewBox%3D%220%200%20128%20128%22%3E%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2228%22%20fill%3D%22%23e9f7f2%22%2F%3E%3Cpath%20d%3D%22M64%2038c-13-10-28-10-42-5v52c14-5%2029-5%2042%205%2013-10%2028-10%2042-5V33c-14-5-29-5-42%205Z%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23176b5b%22%20stroke-width%3D%225%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M64%2038v52M32%2048c8-2%2015-1%2022%202M32%2062c8-2%2015-1%2022%202M96%2048c-8-2-15-1-22%202M96%2062c-8-2-15-1-22%202%22%20fill%3D%22none%22%20stroke%3D%22%23176b5b%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E" alt="FLUENT LAB logo"><span>FLUENT LAB</span></div>
+   <div><div class="auth-brand"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22%3E%3Crect width=%22120%22 height=%22120%22 rx=%2224%22 fill=%22%23172554%22/%3E%3Ctext x=%2260%22 y=%2277%22 font-size=%2250%22 font-family=%22Arial%22 font-weight=%22700%22 text-anchor=%22middle%22 fill=%22white%22%3EFL%3C/text%3E%3C/svg%3E" alt="FLUENT LAB logo"><span>FLUENT LAB</span></div>
     <h1>Learn English.<br>Build your future.</h1><p>A welcoming learning space for teachers, students, parents, and school administrators.</p>
     <div class="auth-benefits"><div><span class="auth-check">✓</span><span>Lessons, resources, and classroom activities</span></div><div><span class="auth-check">✓</span><span>Exams, results, and learning progress</span></div><div><span class="auth-check">✓</span><span>One space for the whole learning community</span></div></div>
    </div><p>LEARN. PRACTICE. PROGRESS.</p>
@@ -394,7 +361,7 @@ document.getElementById('authForm')?.addEventListener('submit', async (event) =>
 <div class="layout">
   <aside class="sidebar">
     <div class="brand">
-      <img class="brand-mark" src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22128%22%20height%3D%22128%22%20viewBox%3D%220%200%20128%20128%22%3E%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2228%22%20fill%3D%22%23e9f7f2%22%2F%3E%3Cpath%20d%3D%22M64%2038c-13-10-28-10-42-5v52c14-5%2029-5%2042%205%2013-10%2028-10%2042-5V33c-14-5-29-5-42%205Z%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23176b5b%22%20stroke-width%3D%225%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M64%2038v52M32%2048c8-2%2015-1%2022%202M32%2062c8-2%2015-1%2022%202M96%2048c-8-2-15-1-22%202M96%2062c-8-2-15-1-22%202%22%20fill%3D%22none%22%20stroke%3D%22%23176b5b%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E" alt="FLUENT LAB logo">
+      <img class="brand-mark" src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22%3E%3Crect width=%22120%22 height=%22120%22 rx=%2224%22 fill=%22%23172554%22/%3E%3Ctext x=%2260%22 y=%2277%22 font-size=%2250%22 font-family=%22Arial%22 font-weight=%22700%22 text-anchor=%22middle%22 fill=%22white%22%3EFL%3C/text%3E%3C/svg%3E" alt="FLUENT LAB logo">
       <div><h2>FLUENT LAB</h2><small>LEARN. PRACTICE. PROGRESS.</small></div>
     </div>
     <div class="nav-label">WORKSPACE</div>
@@ -648,7 +615,7 @@ function dashboard(){
   metrics=metric("Children",1,"♡","Demo parent view")+metric("Courses",db.classes.length,"▦","Demo workspace count")+metric("Assessment results",db.results.length,"✓","Demo results")+metric("Average score",average+"%","↗","Demo result calculation");
   details=`<div class="card">${section("Child's learning overview")}<p class="subtitle">In the production system, this area will show only children linked and approved by the owner.</p></div>`;
  }
- return `${announcementPanel()}<div class="home-brand-banner"><img src="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22128%22%20height%3D%22128%22%20viewBox%3D%220%200%20128%20128%22%3E%3Crect%20width%3D%22128%22%20height%3D%22128%22%20rx%3D%2228%22%20fill%3D%22%23e9f7f2%22%2F%3E%3Cpath%20d%3D%22M64%2038c-13-10-28-10-42-5v52c14-5%2029-5%2042%205%2013-10%2028-10%2042-5V33c-14-5-29-5-42%205Z%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23176b5b%22%20stroke-width%3D%225%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M64%2038v52M32%2048c8-2%2015-1%2022%202M32%2062c8-2%2015-1%2022%202M96%2048c-8-2-15-1-22%202M96%2062c-8-2-15-1-22%202%22%20fill%3D%22none%22%20stroke%3D%22%23176b5b%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E" alt="FLUENT LAB — Learn English. Build Your Future."></div>
+ return `${announcementPanel()}<div class="home-brand-banner"><img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22%3E%3Crect width=%22120%22 height=%22120%22 rx=%2224%22 fill=%22%23172554%22/%3E%3Ctext x=%2260%22 y=%2277%22 font-size=%2250%22 font-family=%22Arial%22 font-weight=%22700%22 text-anchor=%22middle%22 fill=%22white%22%3EFL%3C/text%3E%3C/svg%3E" alt="FLUENT LAB — Learn English. Build Your Future."></div>
  <div class="eyebrow">YOUR LEARNING WORKSPACE</div>
  <h1>${role==="Owner"?"Welcome to FLUENT LAB":role==="Teacher"?"Teaching dashboard":role==="Student"?"Your learning space":"Parent overview"}</h1>
  <p class="subtitle">Your English learning workspace, organized in one place.</p>
@@ -1030,4 +997,211 @@ function openCreate(type){
  }
  const configs={
   class:{title:"Create classroom",collection:"classes",fields:[
-   ["name","Classroom name","text",true],["subject","Subject / course focus","select",true,["English","General English","Primary English","Grammar","Reading","Speaking","IELTS Preparation","Exam Preparation","Other"]],["level","Level / grade","select",true,["Pre-A1","A1","A2","B1","B2","C1","Primary","Grade 1","Grade 2","Grade 3","Exam Preparation"]],["teacher","Assigned teacher","text",true],["students","Current number of students","number",true],["capacity","Maximum class capacity","number",false],["schedule","Schedule (days and time)","text",false],["startDate","Start date","date",false],["endDate","End date","date",false],["location","Room / online meeting link","text",false],["status","Classroom status","select",true,["Active","Upcoming","Paused","Archived"]],["description","Class description","textarea",false],["goals","Learning goals / notes","textarea",false]]},
+   ["name","Classroom name","text",true],["subject","Subject / course focus","select",true,["English","General English","Primary English","Grammar","Reading","Speaking","IELTS Preparation","Exam Preparation","Other"]],["level","Level / grade","select",true,["Pre-A1","A1","A2","B1","B2","C1","Primary","Grade 1","Grade 2","Grade 3","Exam Preparation"]],["teacher","Assigned teacher","text",true],["students","Current number of students","number",true],["capacity","Maximum class capacity","number",false],["schedule","Schedule (days and time)","text",false],["startDate","Start date","date",false],["endDate","End date","date",false],["location","Room / online meeting link","text",false],["status","Classroom status","select",true,["Active","Upcoming","Paused","Archived"]],["description","Class description","textarea",false],["goals","Learning goals / notes","textarea",false]]},  student:{title:"Add student",collection:"students",fields:[
+   ["name","Student full name","text",true],["email","Student email","email",true],["className","Classroom","select",true,db.classes.map(c=>c.name)],["status","Account status","select",true,["Pending","Active"]]]},
+  resource:{title:"Add resource",collection:"resources",fields:[
+   ["title","Resource title","text",true],["category","Category","select",true,["Grammar","Vocabulary","Reading","Listening","Speaking","Writing","Pronunciation","Worksheet","Presentation","Video","Exam Preparation","Homework"]],["course","Course / classroom","select",true,db.classes.map(c=>c.name)],["type","Resource type","select",true,["PDF","DOCX","PPTX","Image","Audio","Video","Link","Worksheet","Notes"]]]},
+  exam:{title:"Create exam",collection:"exams",fields:[
+   ["title","Exam title","text",true],["course","Course / classroom","select",true,db.classes.map(c=>c.name)],["type","Assessment type","select",true,["Vocabulary test","Grammar test","Reading comprehension","Listening test","Speaking assessment","Writing task","Midterm exam","Final exam","Homework / quiz","Other"]],["maxScore","Maximum score","number",true],["date","Exam date","date",false],["duration","Duration (minutes)","number",false],["instructions","Instructions / notes","textarea",false],["status","Publication status","select",true,["Draft","Published"]]]},
+  result:{title:"Record result",collection:"results",fields:[
+   ["student","Student","select",true,db.students.map(s=>s.name)],["exam","Exam","select",true,db.exams.map(e=>e.title)],["score","Score","number",true],["maxScore","Maximum score","number",true]]}
+ };
+ const cfg=configs[type];formConfig={type,...cfg};
+ document.getElementById("modalTitle").textContent=cfg.title;
+ document.getElementById("modalFields").innerHTML=cfg.fields.map(([name,label,inputType,required,options])=>{
+  let input;
+  if(inputType==="select") input=`<select name="${name}" ${required?"required":""}>${(options||[]).map(o=>`<option value="${safeText(o)}">${safeText(o)}</option>`).join("")}</select>`;
+  else input=`<input name="${name}" type="${inputType}" ${required?"required":""} ${inputType==="number"?'min="0"':''} ${name==="students"?"value=\"0\"":""}>`;
+  return `<div class="form-field"><label>${label}</label>${input}</div>`;
+ }).join("");
+ if(type==="exam"){
+  document.getElementById("modalFields").classList.add("class-form-grid");
+  document.getElementById("modalFields").innerHTML = `<div class="form-section-label">ASSESSMENT DETAILS</div>`+document.getElementById("modalFields").innerHTML.replace(/<div class="form-field"><label>Assessment type<\/label>/,`<div class="form-section-label">SCORING & SCHEDULE</div><div class="form-field"><label>Assessment type</label>`).replace(/<div class="form-field"><label>Instructions \/ notes<\/label>/,`<div class="form-section-label">INSTRUCTIONS</div><div class="form-field"><label>Instructions / notes</label>`);
+ } else if(type==="class"){
+  document.getElementById("modalFields").classList.add("class-form-grid");
+  document.getElementById("modalFields").innerHTML = `<div class="form-section-label">CLASSROOM DETAILS</div>`+document.getElementById("modalFields").innerHTML.replace(/<div class="form-field"><label>Assigned teacher<\/label>/,`<div class="form-section-label">PEOPLE & SCHEDULE</div><div class="form-field"><label>Assigned teacher</label>`).replace(/<div class="form-field"><label>Class description<\/label>/,`<div class="form-section-label">DESCRIPTION & LEARNING GOALS</div><div class="form-field"><label>Class description</label>`);
+ } else {document.getElementById("modalFields").classList.remove("class-form-grid");}
+ if(type==="resource"){
+  document.getElementById("modalFields").innerHTML += `<div class="form-field"><label for="resourceFile">Attach file (optional; maximum 100 MB)</label><input id="resourceFile" name="resourceFile" type="file" accept="image/*,video/*,audio/*,.pdf,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.odp,.odt,.txt" onchange="validateResourceFile(this)"><small class="subtitle">For reliable performance, files should be stored in cloud storage rather than inside the website.</small></div>`;
+ }
+ document.getElementById("modalBg").style.display="flex";
+}
+const MAX_UPLOAD_BYTES=100*1024*1024;
+function validateResourceFile(input){const file=input.files&&input.files[0];if(file&&file.size>MAX_UPLOAD_BYTES){alert("Each file must be 100 MB or smaller. Please compress it or choose a smaller file.");input.value="";}}
+function closeModal(){document.getElementById("modalBg").style.display="none";}
+document.getElementById("modalForm").addEventListener("submit",async e=>{
+ e.preventDefault();if(!formConfig)return;
+ const values=Object.fromEntries(new FormData(e.target).entries());
+ const resourceInput=document.getElementById("resourceFile");
+ if(resourceInput&&resourceInput.files&&resourceInput.files[0]){const file=resourceInput.files[0];if(file.size>MAX_UPLOAD_BYTES){alert("Each file must be 100 MB or smaller.");return;}values.fileName=file.name;values.fileSize=file.size;values.fileType=file.type||"application/octet-stream";values.fileStorageKey="resource-"+Date.now()+"-"+Math.random().toString(36).slice(2);try{await storeResourceBlob(values.fileStorageKey,file);}catch(err){console.error(err);alert("The browser could not save this file. Try a smaller file or check available browser storage.");return;}delete values.resourceFile;}
+ for(const key of Object.keys(values)){
+  if(["students","maxScore","score"].includes(key)) values[key]=Number(values[key]);
+ }
+ values.id=Date.now();
+ if(formConfig.type==="editClass"){
+  const classroom=db.classes.find(x=>x.id===formConfig.editId);if(!classroom)return;
+  Object.assign(classroom,values);
+  classroom.students=Number(classroom.students||0);
+  recordActivity("Classroom updated",classroom.name+" details were updated in this local demo.");
+  saveData();closeModal();render();return;
+ }
+ if(formConfig.type==="class"&&!values.status) values.status="Active";
+ if(formConfig.type==="student"&&!values.status) values.status="Pending";
+ if(formConfig.type==="student") values.score=0;
+ if(formConfig.type==="exam"&&!values.status) values.status="Draft";
+ if(formConfig.type==="result"&&(!values.maxScore||values.score>values.maxScore)){
+  alert("Score must not exceed the maximum score.");return;
+ }
+ db[formConfig.collection].push(values);
+ recordActivity(formConfig.title,values.title||values.name||"New record saved");
+ saveData();closeModal();render();
+});
+function approveStudent(id){
+ if(role!=="Owner"){alert("Only the owner can approve registrations.");return;}
+ const s=db.students.find(x=>x.id===id);if(!s)return;
+ s.status="Active";recordActivity("Student approved",s.name+" was approved in this local demo.");
+ saveData();render();
+}
+function deleteItem(collection,id){
+ if(role!=="Owner"&&role!=="Teacher"){alert("Not available in this preview role.");return;}
+ if(!confirm("Delete this demo record?"))return;
+ db[collection]=db[collection].filter(x=>x.id!==id);
+ recordActivity("Demo record deleted",collection+" record "+id);
+ saveData();render();
+}
+function editClass(id){
+ const c=db.classes.find(x=>x.id===id);if(!c)return;
+ if(role!=="Owner"&&role!=="Teacher"){alert("Only an owner or teacher can edit classroom details in this preview.");return;}
+ const fields=[
+  ["name","Classroom name","text",true],
+  ["subject","Subject / course focus","text",false],
+  ["level","Level","select",true,["Pre-A1","A1","A2","B1","B2","C1","Primary","Secondary","Exam Preparation","Other"]],
+  ["teacher","Assigned teacher","text",true],
+  ["students","Current student count","number",true],
+  ["capacity","Maximum class size","number",false],
+  ["status","Classroom status","select",true,["Active","Upcoming","Paused","Archived"]],
+  ["schedule","Schedule / lesson days","text",false],
+  ["startTime","Start time","time",false],
+  ["endTime","End time","time",false],
+  ["room","Room / online meeting link","text",false],
+  ["startDate","Start date","date",false],
+  ["endDate","End date","date",false],
+  ["description","Class description","textarea",false],
+  ["objectives","Learning goals / outcomes","textarea",false],
+  ["notes","Teacher notes","textarea",false]
+ ];
+ formConfig={type:"editClass",collection:"classes",editId:id,title:"Classroom details"};
+ document.getElementById("modalTitle").textContent="Edit classroom details";
+ document.getElementById("modalFields").innerHTML=`<p class="subtitle">Update the class information, schedule, capacity, and learning goals. Changes are saved in this browser's demo data.</p><h3 style="margin:18px 0 4px">Basic information</h3>`+fields.map(([name,label,inputType,required,options],i)=>{
+  let input="";const value=c[name]??(name==="students"?0:name==="capacity"?20:"");
+  if(inputType==="select")input=`<select name="${name}" ${required?"required":""}>${options.map(o=>`<option value="${safeText(o)}" ${String(value)===o?"selected":""}>${safeText(o)}</option>`).join("")}</select>`;
+  else if(inputType==="textarea")input=`<textarea name="${name}" ${required?"required":""} placeholder="Add ${label.toLowerCase()}...">${safeText(value)}</textarea>`;
+  else input=`<input name="${name}" type="${inputType}" value="${safeText(value)}" ${required?"required":""} ${inputType==="number"?'min="0"':''}>`;
+  let heading=i===2?'<h3 style="margin:22px 0 4px">Staff and enrolment</h3>':i===7?'<h3 style="margin:22px 0 4px">Schedule and location</h3>':i===14?'<h3 style="margin:22px 0 4px">Learning plan and notes</h3>':'';
+  return heading+`<div class="form-field"><label for="class-${name}">${label}${required?' *':''}</label>${input.replace(`name="${name}"`,`name="${name}" id="class-${name}"`)}</div>`;
+ }).join("");
+ document.getElementById("modalBg").style.display="flex";
+}
+function viewStudent(id){
+ const s=db.students.find(x=>x.id===id);if(!s)return;
+ alert("DEMO STUDENT PROFILE\\n\\nName: "+s.name+"\\nEmail: "+s.email+"\\nClass: "+s.className+"\\nStatus: "+s.status+"\\nAverage: "+(s.score||"No result")+"\\n\\nA secure production profile will use authenticated database access.");
+}
+function resetDemo(){
+ if(!confirm("Reset all local demo data?"))return;
+ db=structuredClone(initialData);saveData();recordActivity("Demo data reset","Sample records restored.");saveData();render();
+}
+
+let authRole = "Student";
+let authMode = "login";
+function roleSignupMarkup(nextRole){
+ if(nextRole==='Teacher') return `<label class="auth-field">School / learning centre <input name="schoolName" id="signupSchool" placeholder="School or learning centre" /></label><label class="auth-field">Subject / grade <input name="teachingArea" id="signupTeachingArea" placeholder="e.g. Primary English" /></label><p class="role-signup-note">Teacher accounts remain pending until an administrator approves them. Only approved teachers can create classrooms, resources, exams, and results.</p>`;
+ if(nextRole==='Parent') return `<label class="auth-field">Child's student email or linking code <input name="childLink" id="signupChildLink" placeholder="Enter invitation code or student email" /></label><p class="role-signup-note">Parent access to a child's information requires a verified link approved by the school.</p>`;
+ if(nextRole==='Student') return `<label class="auth-field">Class invitation code (if provided) <input name="classCode" id="signupClassCode" placeholder="Enter class code (optional)" /></label><p class="role-signup-note">Student accounts may need school approval before classroom content becomes available.</p>`;
+ return `<p class="role-signup-note">Admin accounts are created by an existing owner only. Self-registration is disabled.</p>`;
+}
+function chooseAuthRole(nextRole){
+ authRole=nextRole;
+ document.querySelectorAll('.auth-role').forEach(b=>b.classList.toggle('active',b.dataset.role===nextRole));
+ const admin=nextRole==='Owner';
+ document.getElementById('adminNote').style.display=admin&&authMode==='signup'?'block':'none';
+ document.getElementById('authName').parentElement.style.display=authMode==='signup'?'block':'none';
+ document.getElementById('confirmField').style.display=authMode==='signup'?'block':'none';
+ document.getElementById('roleSignupFields').style.display=authMode==='signup'?'block':'none';
+ document.getElementById('roleSignupFields').innerHTML=authMode==='signup'?roleSignupMarkup(nextRole):'';
+ document.getElementById('authSubmit').textContent=authMode==='login'?'Log in as '+(admin?'Admin':nextRole):(admin?'Admin registration disabled':'Create '+nextRole.toLowerCase()+' account');
+ document.getElementById('authSubmit').disabled=authMode==='signup'&&admin;
+ document.getElementById('authSubmit').style.opacity=document.getElementById('authSubmit').disabled?'.55':'1';
+ document.getElementById('authHeading').textContent=authMode==='login'?'Welcome back':(admin?'Admin access restricted':'Create your '+nextRole.toLowerCase()+' account');
+ document.getElementById('authSubtitle').textContent=admin?'Secure administrator access. Only an existing owner can create or approve admin accounts.':('Sign in to your '+nextRole.toLowerCase()+' workspace.');
+ document.getElementById('authFeedback').style.display='none';
+}
+function setAuthMode(mode){
+ authMode=mode;
+ document.getElementById('loginTab').classList.toggle('active',mode==='login');
+ document.getElementById('signupTab').classList.toggle('active',mode==='signup');
+ document.getElementById('authName').parentElement.style.display=mode==='signup'?'block':'none';
+ document.getElementById('confirmField').style.display=mode==='signup'?'block':'none';
+ document.getElementById('authPassword').autocomplete=mode==='signup'?'new-password':'current-password';
+ document.getElementById('authNote').textContent=mode==='login'?'Use the password recovery button if you cannot sign in. Authentication is handled by Supabase.':'Registration is a preview only. Real accounts require Supabase Authentication and role approval.';
+ chooseAuthRole(authRole);
+}
+function authPreviewMessage(message){const el=document.getElementById('authFeedback');el.textContent=message;el.style.display='block';}
+function enterDemoPreview(){
+ isDemoPreview=true;authenticatedUser=null;authenticatedProfile=null;
+ document.getElementById('authGate').classList.add('hidden');
+ document.getElementById('roleSelect').style.display='block';
+ document.getElementById('demoModeBanner').classList.add('show');
+ render();
+}
+document.getElementById('authForm').addEventListener('submit',async function(e){
+ e.preventDefault();
+ const email=document.getElementById('authEmail').value.trim().toLowerCase();
+ const password=document.getElementById('authPassword').value;
+ const submit=document.getElementById('authSubmit');
+ if(!email||!password){authFeedback('Please enter your email and password.',true);return;}
+ if(authMode==='signup'&&authRole==='Owner'){authFeedback('Owner self-registration is disabled. The owner account must be assigned securely by an existing owner.',true);return;}
+ if(authMode==='signup'){
+  const name=document.getElementById('authName').value.trim();
+  const confirm=document.getElementById('authConfirm').value;
+  if(!name){authFeedback('Please enter your full name.',true);return;}
+  if(password!==confirm){authFeedback('The passwords do not match.',true);return;}
+  if(password.length<8){authFeedback('Use a password with at least 8 characters.',true);return;}
+  if(authRole==='Teacher'&&(!document.getElementById('signupSchool')?.value.trim()||!document.getElementById('signupTeachingArea')?.value.trim())){authFeedback('Teachers must provide their school/learning centre and teaching area.',true);return;}
+  if(authRole==='Parent'&&!document.getElementById('signupChildLink')?.value.trim()){authFeedback('Parents must provide a child invitation code or student email.',true);return;}
+ }
+ submit.disabled=true;const oldText=submit.textContent;submit.textContent='Please wait…';
+ try{
+  if(authMode==='signup'){
+   const name=document.getElementById('authName').value.trim();
+   const metadata={full_name:name,requested_role:roleToDb(authRole)};
+   if(authRole==='Teacher'){metadata.school_name=document.getElementById('signupSchool')?.value.trim()||'';metadata.teaching_area=document.getElementById('signupTeachingArea')?.value.trim()||'';}
+   if(authRole==='Parent')metadata.child_link=document.getElementById('signupChildLink')?.value.trim()||'';
+   if(authRole==='Student')metadata.class_code=document.getElementById('signupClassCode')?.value.trim()||'';
+   const {data,error}=await fluentSupabase.auth.signUp({email,password,options:{data:metadata,emailRedirectTo:location.origin+location.pathname}});
+   if(error)throw error;
+   if(data.session){authFeedback('Account created. Your account needs owner approval before you can access FLUENT LAB.');}
+   else authFeedback('Registration submitted. Check your email to confirm your address. After confirmation, the owner must approve your account.');
+   return;
+  }
+  const {error}=await fluentSupabase.auth.signInWithPassword({email,password});if(error)throw error;
+  await finishSupabaseLogin();
+ }catch(err){authFeedback(err.message||'Authentication failed. Please try again.',true);}
+ finally{submit.disabled=false;submit.textContent=oldText;}
+});
+
+document.getElementById("roleSelect").addEventListener("change",e=>changeRole(e.target.value));
+document.getElementById("modalBg").addEventListener("click",e=>{if(e.target.id==="modalBg")closeModal();});
+try {
+  chooseAuthRole("Student");
+  applyTheme();
+  render();
+  fluentSupabase.auth.getSession().then(({data,error})=>{if(error)throw error;if(data.session)finishSupabaseLogin().catch(e=>authFeedback(e.message||'Could not load your account.',true));}).catch(e=>authFeedback(e.message||'Could not check your sign-in session.',true));
+} catch (error) {
+  console.error("FLUENT LAB display error:", error);
+  const app = document.getElementById("app");
+  if (app) app.innerHTML = '<div class="card"><h1>FLUENT LAB could not load this page</h1><p class="subtitle">Please refresh the page. If the problem continues, send the error details to the site administrator.</p></div>';
+}
+</script>
+<footer>FLUENT LAB · LEARN. PRACTICE. PROGRESS.</footer>
+</body>
+</html>
