@@ -699,10 +699,41 @@ function classroomsPage(){
 function classroomCards(items){return items.map(c=>`<article class="card course-card classroom-card"><div class="classroom-card-top"><div class="course-icon">🏫</div><span class="pill ${(c.status||"Active")==="Active"?"green":(c.status||"")==="Upcoming"?"orange":"gray"}">${safeText(c.status||"Active")}</span></div><h3>${safeText(c.name)}</h3><p class="classroom-description">${safeText(c.description||c.subject||"A learning space for lessons, activities, and progress.")}</p><div class="classroom-meta"><div class="classroom-meta-item"><small>LEVEL / GRADE</small><strong>${safeText(c.level||"Not set")}</strong></div><div class="classroom-meta-item"><small>STUDENTS</small><strong>👥 ${Number(c.students||0)}${c.capacity?" / "+Number(c.capacity):""}</strong></div><div class="classroom-meta-item"><small>TEACHER</small><strong>${safeText(c.teacher||"Unassigned")}</strong></div><div class="classroom-meta-item"><small>SCHEDULE</small><strong>${safeText(c.schedule||"Not set")}</strong></div></div><div class="progress"><span style="width:${Math.max(0,Math.min(100,c.capacity?Number(c.students||0)/Number(c.capacity)*100:65))}%"></span></div><div class="classroom-card-actions"><button class="btn primary" onclick="editClass(${c.id})">Edit classroom</button><button class="btn" onclick="navigate('Students')">Students →</button></div></article>`).join("")||'<div class="card empty">No classrooms match your search. Try another filter or create a new classroom.</div>';}
 function filterClassrooms(){const q=(document.getElementById("classroomSearch")?.value||"").toLowerCase();const status=document.getElementById("classroomStatusFilter")?.value||"all";const list=db.classes.filter(c=>(`${c.name} ${c.level} ${c.teacher} ${c.subject||""}`).toLowerCase().includes(q)&&(status==="all"||(c.status||"Active")===status));document.getElementById("classroomGrid").innerHTML=classroomCards(list)+`<button class="card create-class-card" onclick="openCreate('class')"><span class="create-class-plus">＋</span><strong>Create a new classroom</strong><small>Set up a new learning group and add its details.</small></button>`; }
 function studentsPage(){
- return `<div class="eyebrow">USER MANAGEMENT</div><h1>Students</h1><p class="subtitle">Review demo student profiles and registration statuses.</p>
+ const linkingTools = (!isDemoPreview && authenticatedProfile && ['owner','teacher'].includes(authenticatedProfile.role))
+ ? `<div class="card" style="margin-top:18px"><div class="eyebrow">PARENT ACCESS</div><h2 style="margin:8px 0">Generate parent linking code</h2><p class="subtitle">Create a one-time code for an active student. It expires in 48 hours and only an approved parent can redeem it.</p><div class="toolbar"><select class="search" id="parentCodeStudent" aria-label="Choose student"><option value="">Loading active students…</option></select><button class="btn primary" onclick="generateParentLinkCode()">Generate code</button></div><div id="parentCodeResult" aria-live="polite"></div></div>`
+ : '';
+ return `<div class="eyebrow">USER MANAGEMENT</div><h1>Students</h1><p class="subtitle">Review student profiles and registration statuses.</p>
  <div class="toolbar"><input class="search" id="studentSearch" placeholder="Search students..." oninput="filterStudents()">
  <button class="btn primary" onclick="openCreate('student')">＋ Add student</button></div>
- <div class="card table-wrap"><table><thead><tr><th>Student</th><th>Class</th><th>Status</th><th>Average</th><th>Action</th></tr></thead><tbody id="studentRows">${studentRows(db.students)}</tbody></table></div>`;
+ <div class="card table-wrap"><table><thead><tr><th>Student</th><th>Class</th><th>Status</th><th>Average</th><th>Action</th></tr></thead><tbody id="studentRows">${studentRows(db.students)}</tbody></table></div>${linkingTools}`;
+}
+async function loadStudentsForLinkingCodes(){
+ const select=document.getElementById('parentCodeStudent'); if(!select)return;
+ select.innerHTML='<option value="">Loading active students…</option>';
+ const {data,error}=await fluentSupabase.from('profiles').select('username,email,"full name"').eq('role','student').eq('status','active').order('full name');
+ if(error){select.innerHTML='<option value="">Could not load students</option>';showParentCodeResult(error.message,true);return;}
+ select.innerHTML='<option value="">Choose an active student</option>'+(data||[]).map(p=>`<option value="${escapeHtml(p.username)}">${escapeHtml(p["full name"]||p.email||p.username)} — ${escapeHtml(p.email||'')}</option>`).join('');
+}
+function showParentCodeResult(message,isError=false){
+ const el=document.getElementById('parentCodeResult');if(!el)return;
+ el.innerHTML=`<p style="font-size:13px;color:${isError?'#b42318':'var(--green)'}">${escapeHtml(message)}</p>`;
+}
+async function generateParentLinkCode(){
+ const select=document.getElementById('parentCodeStudent');const childId=select?.value;
+ if(!childId){showParentCodeResult('Choose a student first.',true);return;}
+ const btn=select.parentElement.querySelector('button');if(btn){btn.disabled=true;btn.textContent='Generating…';}
+ try{
+  const {data,error}=await fluentSupabase.rpc('generate_parent_link_code',{target_child_id:childId});
+  if(error)throw error;
+  const el=document.getElementById('parentCodeResult');
+  if(el)el.innerHTML=`<div class="card" style="background:var(--pale);margin-top:10px"><p style="margin:0 0 8px;font-size:12px;color:var(--muted)">Share this code privately with the student's parent. It expires in 48 hours.</p><strong id="generatedParentCode" style="font-size:22px;letter-spacing:1.5px">${escapeHtml(data)}</strong> <button class="btn" onclick="copyParentLinkCode()">Copy code</button></div>`;
+ }catch(e){showParentCodeResult(e.message||'Could not generate a parent code.',true);}
+ finally{if(btn){btn.disabled=false;btn.textContent='Generate code';}}
+}
+async function copyParentLinkCode(){
+ const code=document.getElementById('generatedParentCode')?.textContent;if(!code)return;
+ try{await navigator.clipboard.writeText(code);showParentCodeResult('Code copied. Share it privately with the parent.');}
+ catch(e){showParentCodeResult('Select and copy the code manually; clipboard access was blocked.',true);}
 }
 function studentRows(items){
  return items.map(s=>`<tr><td><div class="person"><div class="avatar">${safeText(s.name[0])}</div><div><strong>${safeText(s.name)}</strong><small>${safeText(s.email)}</small></div></div></td><td>${safeText(s.className)}</td><td><span class="pill ${s.status==="Active"?"green":s.status==="Pending"?"orange":"gray"}">${safeText(s.status)}</span></td><td>${s.score?s.score+"%":"—"}</td><td>${s.status==="Pending"?`<button class="btn primary" onclick="approveStudent(${s.id})">Approve</button>`:`<button class="btn" onclick="viewStudent(${s.id})">View</button>`}</td></tr>`).join("")||'<tr><td colspan="5" class="empty">No students found.</td></tr>';
@@ -965,6 +996,37 @@ async function toggleVoiceRecording(){
  }catch(e){alert('Microphone access was not granted. Please allow microphone access and try again.');voiceRecording=false;}
 }
 
+function parentChildrenPage(){
+ const savedCode=authenticatedUser?.user_metadata?.child_link||'';
+ return `<div class="eyebrow">PARENT PORTAL</div><h1>My Children</h1><p class="subtitle">Link your child using the one-time invitation code provided by FLUENT LAB or your child's teacher.</p><div class="card"><h2 style="margin-top:0">Link a child</h2><p class="subtitle">Your parent account must be approved and active. Codes expire after 48 hours and can only be used once.</p><div class="toolbar"><input class="search" id="redeemParentCode" maxlength="40" placeholder="Example: FL-ABCDEF1234567890" value="${escapeHtml(savedCode)}" autocomplete="off" style="min-width:240px;flex:1"><button class="btn primary" onclick="redeemParentLinkCode()">Link child</button></div><div id="parentLinkFeedback" aria-live="polite"></div></div><div class="card" style="margin-top:18px"><h2 style="margin-top:0">Linked children</h2><div id="linkedChildrenList" class="empty">Loading linked children…</div></div>`;
+}
+function parentLinkFeedback(message,isError=false){
+ const el=document.getElementById('parentLinkFeedback');if(!el)return;
+ el.innerHTML=`<p style="font-size:13px;color:${isError?'#b42318':'var(--green)'}">${escapeHtml(message)}</p>`;
+}
+async function redeemParentLinkCode(){
+ const input=document.getElementById('redeemParentCode');const code=input?.value.trim();
+ if(!code){parentLinkFeedback('Enter the invitation code first.',true);return;}
+ try{
+  const {data,error}=await fluentSupabase.rpc('redeem_parent_link_code',{input_code:code});
+  if(error)throw error;
+  parentLinkFeedback('Child linked successfully: '+(data?.child_name||'student')+'.');
+  if(input)input.value='';
+  await loadParentChildren();
+ }catch(e){parentLinkFeedback(e.message||'Could not link this child. Check the code and account approval.',true);}
+}
+async function loadParentChildren(){
+ const target=document.getElementById('linkedChildrenList');if(!target||!authenticatedUser)return;
+ const {data:links,error}=await fluentSupabase.from('parent_children').select('child_id,status').eq('parent_id',authenticatedUser.id).eq('status','active');
+ if(error){target.textContent='Could not load linked children: '+error.message;return;}
+ if(!links?.length){target.textContent='No children linked yet. Enter a valid invitation code above.';target.className='empty';return;}
+ const ids=links.map(x=>x.child_id);
+ const {data:children,error:profileError}=await fluentSupabase.from('profiles').select('username,email,"full name",status').in('username',ids);
+ if(profileError){target.textContent='Could not load student profiles: '+profileError.message;return;}
+ target.className='';
+ target.innerHTML=(children||[]).map(p=>`<div class="activity"><div class="avatar">👧</div><div><strong>${escapeHtml(p["full name"]||'Student')}</strong><p>${escapeHtml(p.email||'')} · ${escapeHtml(p.status||'')}</p></div></div>`).join('')||'No active linked profiles found.';
+}
+async function renderParentChildrenAfterLogin(){if(role==='Parent')await loadParentChildren();}
 function render(){
  updateNavigation();
  document.getElementById("roleSelect").value=role;
@@ -984,7 +1046,7 @@ function render(){
  else if(currentPage==="Progress"||currentPage==="My Progress"||currentPage==="Results & Progress") app.innerHTML=progressPage();
  else if(currentPage==="Settings") app.innerHTML=settingsPage();
  else if(currentPage==="Messages") app.innerHTML=messagesPage();
- else if(currentPage==="My Children") app.innerHTML=`<div class="eyebrow">PARENT PORTAL</div><h1>My Children</h1><p class="subtitle">View linked children's classroom information and learning progress.</p><div class="card"><div class="empty">Child profiles will appear here after secure parent-child accounts are connected.</div></div>`;
+ else if(currentPage==="My Children") { app.innerHTML=parentChildrenPage(); loadParentChildren(); }
  else app.innerHTML=dashboard();
 }
 function openCreate(type){
@@ -1115,7 +1177,7 @@ let authRole = "Student";
 let authMode = "login";
 function roleSignupMarkup(nextRole){
  if(nextRole==='Teacher') return `<label class="auth-field">School / learning centre <input name="schoolName" id="signupSchool" placeholder="School or learning centre" /></label><label class="auth-field">Subject / grade <input name="teachingArea" id="signupTeachingArea" placeholder="e.g. Primary English" /></label><p class="role-signup-note">Teacher accounts remain pending until an administrator approves them. Only approved teachers can create classrooms, resources, exams, and results.</p>`;
- if(nextRole==='Parent') return `<label class="auth-field">Child's student email or linking code <input name="childLink" id="signupChildLink" placeholder="Enter invitation code or student email" /></label><p class="role-signup-note">Parent access to a child's information requires a verified link approved by the school.</p>`;
+ if(nextRole==='Parent') return `<label class="auth-field">Parent invitation code (optional) <input name="childLink" id="signupChildLink" placeholder="Enter code from your child's school" /></label><p class="role-signup-note">Your account must be approved first. You can securely link your child with this one-time code from the My Children page.</p>`;
  if(nextRole==='Student') return `<label class="auth-field">Class invitation code (if provided) <input name="classCode" id="signupClassCode" placeholder="Enter class code (optional)" /></label><p class="role-signup-note">Student accounts may need school approval before classroom content becomes available.</p>`;
  return `<p class="role-signup-note">Admin accounts are created by an existing owner only. Self-registration is disabled.</p>`;
 }
@@ -1167,7 +1229,7 @@ document.getElementById('authForm').addEventListener('submit',async function(e){
   if(password!==confirm){authFeedback('The passwords do not match.',true);return;}
   if(password.length<8){authFeedback('Use a password with at least 8 characters.',true);return;}
   if(authRole==='Teacher'&&(!document.getElementById('signupSchool')?.value.trim()||!document.getElementById('signupTeachingArea')?.value.trim())){authFeedback('Teachers must provide their school/learning centre and teaching area.',true);return;}
-  if(authRole==='Parent'&&!document.getElementById('signupChildLink')?.value.trim()){authFeedback('Parents must provide a child invitation code or student email.',true);return;}
+  // Parent codes are optional during registration because pending accounts cannot redeem them. They can be redeemed after owner approval.
  }
  submit.disabled=true;const oldText=submit.textContent;submit.textContent='Please wait…';
  try{
